@@ -557,13 +557,15 @@ body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
    HERO VIDEO ＋ 透明ヘッダー（Sony風：トップビューに広島の動画、
    ヘッダーは動画の上では透明＝白ロゴ、スクロールで白地＝ダークロゴ）
    ============================================================ */
-.hero { color: #fff; background: #0b0f24; }
+.hero { color: #fff; position: relative; z-index: 0; }
 .hero::before { display: none; }
-/* トップビューの背景＝動画（広島） */
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-.hero-scrim { position: absolute; inset: 0; z-index: -1; background:
+/* トップビューの背景＝動画（広島）。ヒーローを独立スタッキングにし、動画→スクリム→内容の順で前面に */
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-scrim { position: absolute; inset: 0; z-index: 1; background:
   linear-gradient(90deg, rgba(8,8,22,.62) 0%, rgba(8,8,22,.34) 46%, rgba(8,8,22,.12) 100%),
   linear-gradient(0deg, rgba(8,8,22,.5) 0%, rgba(8,8,22,0) 42%); }
+.hero-inner { position: relative; z-index: 2; }
+.hero .scroll-hint { z-index: 2; }
 
 /* ===== サイト全体の固定背景＝トンマナ（青→紫→マゼンタ）の緩やかに動くグラデ ===== */
 .site-bg {
@@ -596,83 +598,47 @@ body { background: transparent; }
 .breadcrumb { background: rgba(255,255,255,.7); }
 .cta.section { background: rgba(247,247,248,.55); }
 .hero h1 { color: #fff; }
-.hero-kicker { color: rgba(255,255,255,.82); }
 .hero-lead { color: rgba(255,255,255,.92); }
 .hero .btn-ghost { color: #fff; border-color: rgba(255,255,255,.55); }
 .hero .btn-ghost:hover { color: #fff; border-color: #fff; }
 .hero .scroll-hint { color: rgba(255,255,255,.72); }
 .hero .scroll-hint::after { background: linear-gradient(rgba(255,255,255,.72), transparent); }
-
-/* ---- logo の出し分け ---- */
-.brand-logo.logo-light { display: none; height: 26px; width: auto; }
-.brand-logo.logo-dark { display: block; }
-
-/* ---- header transition ---- */
-.site-header { transition: background .3s ease, border-color .3s ease, box-shadow .3s ease; }
-
-/* ---- 透明ヘッダー（ヒーロー上・未スクロール時） ---- */
-.site-header.over-hero:not(.scrolled) { background: transparent; border-color: transparent; box-shadow: none; }
-.site-header.over-hero:not(.scrolled) .brand-logo.logo-light { display: block; }
-.site-header.over-hero:not(.scrolled) .brand-logo.logo-dark { display: none; }
-.site-header.over-hero:not(.scrolled) .global-nav a { color: rgba(255,255,255,.92); }
-.site-header.over-hero:not(.scrolled) .global-nav a::after { background: #fff; }
-.site-header.over-hero:not(.scrolled) .global-nav a:hover,
-.site-header.over-hero:not(.scrolled) .global-nav a.active { color: #fff; }
-.site-header.over-hero:not(.scrolled) .lang-toggle a { color: rgba(255,255,255,.7); }
-.site-header.over-hero:not(.scrolled) .lang-toggle a.on,
-.site-header.over-hero:not(.scrolled) .lang-toggle .sep { color: #fff; }
-.site-header.over-hero:not(.scrolled) .btn-head { color: #fff; border-color: rgba(255,255,255,.6); }
-.site-header.over-hero:not(.scrolled) .btn-head:hover { background: #fff; color: var(--ink-strong); }
-.site-header.over-hero:not(.scrolled) .nav-burger span { background: #fff; }
+/* ※ ヘッダーのロゴ出し分け・配色は末尾「UNIFIED HEADER」に集約（常時ダーク＋白ロゴ） */
 
 /* ============================================================
    MISSION FEATURE（Sony風：左に細い大きな文、右に段違いの画像コラージュ。
    各画像はスクロールで方向違いにスライドイン）
    ============================================================ */
 .mission-feature {
-  position: relative; overflow: hidden; padding: 124px 24px; color: var(--ink);
-  background: #ffffff;
+  position: relative; overflow: hidden; padding: 104px 0 110px; color: var(--ink);
+  background: rgba(255,255,255,.60); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
 }
 .mission-feature::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
-    radial-gradient(42% 52% at 10% 14%, rgba(61,90,171,.07), transparent 62%),
-    radial-gradient(42% 52% at 90% 88%, rgba(214,51,108,.06), transparent 64%);
+    radial-gradient(42% 52% at 10% 14%, rgba(61,90,171,.05), transparent 62%),
+    radial-gradient(42% 52% at 90% 88%, rgba(214,51,108,.05), transparent 64%);
 }
-.mf-inner {
-  position: relative; max-width: var(--maxw); margin: 0 auto;
-  display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center;
-}
-.mf-kicker { font-family: var(--font-en); font-size: 12px; letter-spacing: .32em; font-weight: 600; color: var(--ink-soft); margin-bottom: 26px; }
-.mf-statement { font-size: clamp(26px, 3.7vw, 44px); font-weight: 200; line-height: 1.6; letter-spacing: .02em; margin-bottom: 24px; color: var(--ink-strong); }
+.mf-text { position: relative; max-width: 860px; margin: 0 auto 56px; padding: 0 24px; text-align: center; }
+.mf-kicker { font-family: var(--font-en); font-size: 12px; letter-spacing: .32em; font-weight: 600; color: var(--ink-soft); margin-bottom: 24px; }
+.mf-statement { font-size: clamp(24px, 3.6vw, 42px); font-weight: 200; line-height: 1.62; letter-spacing: .02em; margin-bottom: 22px; color: var(--ink-strong); }
 .mf-statement strong { font-weight: 600; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.mf-sub { font-size: 14.5px; line-height: 2.05; color: var(--ink-soft); max-width: 520px; margin-bottom: 30px; }
+.mf-sub { font-size: 14.5px; line-height: 2.05; color: var(--ink-soft); max-width: 600px; margin: 0 auto 26px; }
 .mf-link { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink-strong); }
 .mf-link::after { content: "›"; font-size: 1.25em; line-height: 1; }
 .mf-link:hover { opacity: .82; }
 
-.mf-collage { position: relative; min-height: 500px; }
-.mf-img { position: absolute; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 46px rgba(20,30,60,.16);
-  transition: opacity .8s ease, transform .9s cubic-bezier(.18,.72,.18,1); }
-.mf-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.mf-img1 { width: 60%; aspect-ratio: 16 / 11; top: 0; right: 0; z-index: 1; }
-.mf-img2 { width: 42%; aspect-ratio: 4 / 3; top: 30%; left: 0; z-index: 3; transition-delay: .12s; }
-.mf-img3 { width: 48%; aspect-ratio: 16 / 10; bottom: 0; right: 8%; z-index: 2; transition-delay: .24s; }
-
-/* directional reveal（方向アニメ：右/左/下からスライドイン） */
-[data-reveal].rv-right:not(.in) { transform: translateX(56px); }
-[data-reveal].rv-left:not(.in)  { transform: translateX(-56px); }
-[data-reveal].rv-up:not(.in)    { transform: translateY(52px); }
-
-@media (max-width: 900px) {
-  .mission-feature { padding: 88px 24px; }
-  .mf-inner { grid-template-columns: 1fr; gap: 40px; }
-  .mf-collage { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .mf-img { position: static; width: auto; aspect-ratio: 16 / 10; box-shadow: 0 12px 26px rgba(20,30,60,.14); }
-  .mf-img2 { grid-column: 1 / -1; }
-  /* モバイルは横スライドを縦スライドに（横スクロール防止） */
-  [data-reveal].rv-right:not(.in), [data-reveal].rv-left:not(.in) { transform: translateY(44px); }
-}
+/* 画像が左から流れ込み、等速で右へ抜けていく（無限ループ＝右方向に流れ続ける） */
+.mission-flow { position: relative; width: 100%; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%); }
+.flow-track { display: flex; gap: 22px; width: max-content; padding: 8px 0; animation: flowRight 40s linear infinite; }
+.flow-track figure { flex: none; width: clamp(230px, 24vw, 340px); aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 40px rgba(20,30,60,.20); }
+.flow-track img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@keyframes flowRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.mission-flow:hover .flow-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .flow-track { animation: none; } }
+@media (max-width: 900px) { .mission-feature { padding: 80px 0 84px; } }
 
 /* ============================================================
    SERVICE PRISM（透明な四角柱：各側面に事業画像／タップで回転）
