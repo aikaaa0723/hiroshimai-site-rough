@@ -37,20 +37,14 @@
       <div class="scroll-hint" aria-hidden="true">Scroll</div>
     </section>
 
-    <!-- ===== Mission（Sony風：左に文／右に画像がモーションで出現） ===== -->
+    <!-- ===== Mission（画像が左→右へ流れ続け、横66%で不透過・離れるほど透過） ===== -->
     <section class="mission-feature">
-      <div class="mf-inner">
-        <div class="mf-text" data-reveal>
-          <p class="mf-kicker">MISSION ・ ミッション</p>
-          <p class="mf-statement">「AIを使いたい」で終わらせない。<br /><strong>成果が出るまで、伴走する。</strong></p>
-          <p class="mf-sub">経営に直結する AI顧問 と、組織全体のリテラシーを底上げする AI研修 を両輪に、御社のAI活用を一気通貫で支援します。構想だけで終わらせない「実装力」が私たちの強みです。</p>
-          <a class="mf-link" href="about/index.html">私たちについて</a>
-        </div>
-        <div class="mf-collage">
-          <figure class="mf-img mf-img1 rv-right" data-reveal><img src="assets/img-meeting.png" alt="" loading="lazy" /></figure>
-          <figure class="mf-img mf-img2 rv-left" data-reveal><img src="assets/img-laptop.png" alt="" loading="lazy" /></figure>
-          <figure class="mf-img mf-img3 rv-up" data-reveal><img src="assets/img-monitors.png" alt="" loading="lazy" /></figure>
-        </div>
+      <div class="mflow" id="mflow" aria-hidden="true"></div>
+      <div class="mf-text" data-reveal>
+        <p class="mf-kicker">MISSION ・ ミッション</p>
+        <p class="mf-statement">「AIを使いたい」で終わらせない。<br /><strong>成果が出るまで、伴走する。</strong></p>
+        <p class="mf-sub">経営に直結する AI顧問 と、組織全体のリテラシーを底上げする AI研修 を両輪に、御社のAI活用を一気通貫で支援します。構想だけで終わらせない「実装力」が私たちの強みです。</p>
+        <a class="mf-link" href="about/index.html">私たちについて</a>
       </div>
     </section>
 
@@ -158,6 +152,60 @@
         dots.forEach(function (d) {
           d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); });
         });
+      })();
+
+      /* ===== Mission：画像が左→右へ流れ続ける（横66%で不透過・離れるほど透過） ===== */
+      (function () {
+        var host = document.getElementById("mflow");
+        if (!host) return;
+        var IMGS = ["assets/img-meeting.png", "assets/img-laptop.png", "assets/img-monitors.png", "assets/img-abstract.png"];
+        var FOCUS = 0.66;   /* 不透過になる横位置（画面幅比 ≒ 6.6:3.4） */
+        var FALLOFF = 0.34; /* これだけ離れると透過0（画面幅比） */
+        var SPEED = 0.052;  /* px/ms ≒ 52px/s */
+        var N = 7;
+        function rand(a, b) { return a + Math.random() * (b - a); }
+        var W = 0, H = 0, tiles = [];
+        function measure() { W = host.clientWidth; H = host.clientHeight; }
+        measure();
+        var ii = 0;
+        for (var k = 0; k < N; k++) {
+          var d = document.createElement("div"); d.className = "mtile";
+          var im = document.createElement("img"); im.src = IMGS[k % IMGS.length]; im.alt = "";
+          d.appendChild(im); host.appendChild(d); tiles.push(d);
+        }
+        function reset(t, x) {
+          t._w = rand(230, 330); t._h = t._w * 0.62;
+          t._x = x; t._y = rand(H * 0.10, Math.max(H * 0.10, H - t._h - H * 0.10));
+          t.style.width = t._w + "px"; t.style.height = t._h + "px";
+          t.querySelector("img").src = IMGS[(ii++) % IMGS.length];
+        }
+        var x0 = -rand(80, 240);
+        for (var k2 = 0; k2 < tiles.length; k2++) { reset(tiles[k2], x0); x0 += tiles[k2]._w + rand(70, 200); }
+        window.addEventListener("resize", measure, { passive: true });
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var last = null;
+        function frame(ts) {
+          if (last == null) last = ts;
+          var dt = Math.min(48, ts - last); last = ts;
+          var focusX = W * FOCUS, falloff = W * FALLOFF;
+          for (var k = 0; k < tiles.length; k++) {
+            var t = tiles[k];
+            t._x += SPEED * dt;
+            if (t._x > W + 60) {
+              var minx = Infinity;
+              for (var j = 0; j < tiles.length; j++) { if (tiles[j]._x < minx) minx = tiles[j]._x; }
+              reset(t, minx - rand(70, 200));
+            }
+            var cx = t._x + t._w / 2;
+            var op = 1 - Math.abs(cx - focusX) / falloff;
+            op = op < 0 ? 0 : (op > 1 ? 1 : op);
+            t.style.transform = "translate3d(" + t._x.toFixed(1) + "px," + t._y.toFixed(1) + "px,0)";
+            t.style.opacity = op.toFixed(3);
+          }
+          requestAnimationFrame(frame);
+        }
+        if (!reduce) requestAnimationFrame(frame);
+        else { for (var k3 = 0; k3 < tiles.length; k3++) { tiles[k3]._x = W * (0.2 + k3 * 0.12); tiles[k3].style.transform = "translate3d(" + tiles[k3]._x + "px," + tiles[k3]._y + "px,0)"; tiles[k3].style.opacity = "0.5"; } }
       })();
     </script>
 
