@@ -557,30 +557,44 @@ body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
    HERO VIDEO ＋ 透明ヘッダー（Sony風：トップビューに広島の動画、
    ヘッダーは動画の上では透明＝白ロゴ、スクロールで白地＝ダークロゴ）
    ============================================================ */
-.hero { color: #fff; background: #0e1430; }
+.hero { color: #fff; background: #0b0f24; }
 .hero::before { display: none; }
-/* トンマナ（ブルー→パープル→マゼンタ）の緩やかに動くグラデ背景（Sony風） */
-.hero-bg-anim {
-  position: absolute; inset: 0; z-index: -2;
+/* トップビューの背景＝動画（広島） */
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.hero-scrim { position: absolute; inset: 0; z-index: -1; background:
+  linear-gradient(90deg, rgba(8,8,22,.62) 0%, rgba(8,8,22,.34) 46%, rgba(8,8,22,.12) 100%),
+  linear-gradient(0deg, rgba(8,8,22,.5) 0%, rgba(8,8,22,0) 42%); }
+
+/* ===== サイト全体の固定背景＝トンマナ（青→紫→マゼンタ）の緩やかに動くグラデ ===== */
+.site-bg {
+  position: fixed; inset: 0; z-index: -10; pointer-events: none;
   background:
-    radial-gradient(48% 62% at 16% 24%, rgba(72,104,210,1), transparent 66%),
-    radial-gradient(52% 64% at 84% 20%, rgba(140,92,222,.95), transparent 66%),
-    radial-gradient(58% 70% at 70% 84%, rgba(226,52,120,.92), transparent 68%),
-    radial-gradient(46% 58% at 28% 92%, rgba(70,104,210,.8), transparent 64%),
-    linear-gradient(120deg, #182154 0%, #271a55 52%, #361642 100%);
+    radial-gradient(46% 58% at 16% 22%, rgba(72,104,210,.9), transparent 66%),
+    radial-gradient(50% 60% at 84% 18%, rgba(140,92,222,.85), transparent 66%),
+    radial-gradient(56% 66% at 72% 82%, rgba(226,52,120,.82), transparent 68%),
+    radial-gradient(44% 56% at 26% 90%, rgba(70,104,210,.7), transparent 64%),
+    linear-gradient(120deg, #1a2358 0%, #281b58 52%, #371744 100%);
   background-size: 200% 200%, 200% 200%, 220% 220%, 200% 200%, 100% 100%;
   background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0;
-  animation: heroDrift 30s ease-in-out infinite;
+  animation: heroDrift 34s ease-in-out infinite;
 }
 @keyframes heroDrift {
   0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0; }
   50%  { background-position: 100% 60%, 0% 70%, 90% 10%, 60% 30%, 0 0; }
   100% { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0; }
 }
-@media (prefers-reduced-motion: reduce) { .hero-bg-anim { animation: none; } }
-.hero-scrim { position: absolute; inset: 0; z-index: -1; background:
-  linear-gradient(90deg, rgba(8,8,22,.5) 0%, rgba(8,8,22,.2) 50%, rgba(8,8,22,.05) 100%),
-  linear-gradient(0deg, rgba(8,8,22,.42) 0%, rgba(8,8,22,0) 42%); }
+@media (prefers-reduced-motion: reduce) { .site-bg { animation: none; } }
+
+/* ===== セクションを半透明にして、動く背景を透かす（白地は維持して可読性確保） ===== */
+body { background: transparent; }
+.section { background: rgba(255,255,255,.80); backdrop-filter: blur(7px) saturate(1.05); -webkit-backdrop-filter: blur(7px) saturate(1.05); }
+.section.alt { background: rgba(255,255,255,.62); }
+.mission-feature { background: rgba(255,255,255,.80); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.page-section { background: rgba(255,255,255,.80); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.page-section.alt { background: rgba(255,255,255,.62); }
+.page-hero { background: rgba(247,247,248,.66); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.breadcrumb { background: rgba(255,255,255,.7); }
+.cta.section { background: rgba(247,247,248,.55); }
 .hero h1 { color: #fff; }
 .hero-kicker { color: rgba(255,255,255,.82); }
 .hero-lead { color: rgba(255,255,255,.92); }
@@ -659,3 +673,41 @@ body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
   /* モバイルは横スライドを縦スライドに（横スクロール防止） */
   [data-reveal].rv-right:not(.in), [data-reveal].rv-left:not(.in) { transform: translateY(44px); }
 }
+
+/* ============================================================
+   SERVICE PRISM（透明な四角柱：各側面に事業画像／タップで回転）
+   ============================================================ */
+.prism-wrap { display: flex; align-items: center; justify-content: center; gap: clamp(8px, 3vw, 30px); max-width: var(--maxw); margin: 0 auto; }
+.prism-stage { position: relative; width: clamp(280px, 64vw, 540px); aspect-ratio: 4 / 3; perspective: 1600px; }
+.prism { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .95s cubic-bezier(.2,.8,.2,1); cursor: pointer; }
+.prism-face {
+  position: absolute; inset: 0; display: block; border-radius: 16px; overflow: hidden;
+  backface-visibility: hidden;
+  background: #10142c; color: #fff;
+  border: 1px solid rgba(255,255,255,.38);
+  box-shadow: 0 30px 70px rgba(8,12,34,.5), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.prism-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .96; }
+.prism-face::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,10,24,.04) 28%, rgba(8,10,24,.8) 100%); }
+.pf-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 22px 24px; display: flex; flex-direction: column; gap: 4px; }
+.pf-num { font-family: var(--font-en); font-size: 13px; font-weight: 700; letter-spacing: .12em; color: #fff; opacity: .82; }
+.pf-title { font-size: clamp(18px, 2.4vw, 25px); font-weight: 700; line-height: 1.3; }
+.pf-sub { font-size: 12.5px; font-weight: 400; opacity: .86; }
+.prism-face:nth-child(1) { transform: rotateY(0deg)   translateZ(var(--d, 240px)); }
+.prism-face:nth-child(2) { transform: rotateY(90deg)  translateZ(var(--d, 240px)); }
+.prism-face:nth-child(3) { transform: rotateY(180deg) translateZ(var(--d, 240px)); }
+.prism-face:nth-child(4) { transform: rotateY(270deg) translateZ(var(--d, 240px)); }
+
+.prism-nav { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  background: rgba(255,255,255,.92); color: var(--ink-strong); font-size: 22px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s, background .2s; }
+.prism-nav:hover { border-color: var(--magenta); color: var(--magenta); }
+@media (max-width: 560px) { .prism-nav { width: 40px; height: 40px; font-size: 19px; } }
+
+.prism-dots { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+.prism-dots button { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); background: rgba(255,255,255,.6);
+  border: 1px solid var(--line); border-radius: 20px; padding: 7px 16px; cursor: pointer; transition: all .2s; }
+.prism-dots button:hover { color: var(--ink-strong); border-color: var(--ink-soft); }
+.prism-dots button.on { color: #fff; background: var(--grad); border-color: transparent; }
+.prism-hint { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
