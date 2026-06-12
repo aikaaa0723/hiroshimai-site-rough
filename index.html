@@ -54,22 +54,31 @@
         <div><p class="en">ABOUT</p><h2>私たちについて</h2></div>
         <a href="about/index.html" class="more">もっと見る</a>
       </div>
-      <div class="s-grid col3 about-3d">
-        <a class="s-card" href="about/index.html" data-reveal>
-          <div class="s-thumb"><img src="assets/img-abstract.png" alt="" loading="lazy" /></div>
-          <p class="s-cat">企業理念</p><h3>Purpose・Mission・Vision</h3>
-          <p>人が、人にしかできない創造的な仕事に没頭できる社会へ。AIは目的ではなく実装の手段。</p>
-        </a>
-        <a class="s-card" href="about/index.html" data-reveal>
-          <div class="s-thumb"><img src="assets/img-meeting.png" alt="" loading="lazy" /></div>
-          <p class="s-cat">価値観と行動指針</p><h3>素直・感謝・自責 ／ 勝ち方の技術</h3>
-          <p>成果以前の人格を土台に、スピードと量で学び、クオリティで磨く。</p>
-        </a>
-        <a class="s-card" href="about/index.html" data-reveal>
-          <div class="s-thumb"><img src="assets/img-laptop.png" alt="" loading="lazy" /></div>
-          <p class="s-cat">代表メッセージ・会社概要</p><h3>成果が出るまで、伴走する。</h3>
-          <p>代表 住田の想いと会社概要・略歴をご紹介します。</p>
-        </a>
+      <div class="about-carousel" data-reveal>
+        <div class="ac-controls">
+          <div class="ac-arrows">
+            <button class="ac-arrow" id="acPrev" type="button" aria-label="前へ">←</button>
+            <button class="ac-arrow" id="acNext" type="button" aria-label="次へ">→</button>
+          </div>
+          <div class="ac-bar" aria-hidden="true"><span class="ac-bar-fill" id="acBar"></span></div>
+          <div class="ac-num"><span id="acNum">01</span> / 03</div>
+        </div>
+        <div class="ac-viewport">
+          <div class="ac-track" id="acTrack">
+            <article class="ac-slide">
+              <a class="ac-img" href="about/index.html"><img src="assets/img-abstract.png" alt="" /></a>
+              <div class="ac-cap"><p class="ac-cat">企業理念</p><h3>Purpose・Mission・Vision</h3><p class="ac-desc">人が、人にしかできない創造的な仕事に没頭できる社会へ。AIは目的ではなく実装の手段です。すべての判断を、人の創造性を取り戻す一点に接続します。</p></div>
+            </article>
+            <article class="ac-slide">
+              <a class="ac-img" href="about/index.html"><img src="assets/img-meeting.png" alt="" /></a>
+              <div class="ac-cap"><p class="ac-cat">価値観と行動指針</p><h3>素直・感謝・自責 ／ 勝ち方の技術</h3><p class="ac-desc">成果以前の人格を土台に、スピードと量で学び、クオリティで磨き、創造と誠実で顧客価値へ変えます。</p></div>
+            </article>
+            <article class="ac-slide">
+              <a class="ac-img" href="about/index.html"><img src="assets/img-laptop.png" alt="" /></a>
+              <div class="ac-cap"><p class="ac-cat">代表メッセージ・会社概要</p><h3>成果が出るまで、伴走する。</h3><p class="ac-desc">「AIを使いたい」で終わらせない。代表 住田の想いと、会社概要・略歴をご紹介します。</p></div>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -208,25 +217,32 @@
         else { for (var k3 = 0; k3 < tiles.length; k3++) { tiles[k3]._x = W * (0.2 + k3 * 0.12); tiles[k3].style.transform = "translate3d(" + tiles[k3]._x + "px," + tiles[k3]._y + "px,0)"; tiles[k3].style.opacity = "0.5"; } }
       })();
 
-      /* ===== About：マウス追従の3Dチルト（立体感・なじむ控えめ動き） ===== */
+      /* ===== About カルーセル（左の矢印で右の画像＋説明をスワイプ） ===== */
       (function () {
-        var cards = document.querySelectorAll(".about-3d .s-card");
-        if (!cards.length) return;
-        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        var MAX = 7; /* 傾きの最大角（度）控えめ */
-        cards.forEach(function (card) {
-          card.addEventListener("mousemove", function (e) {
-            var r = card.getBoundingClientRect();
-            var px = (e.clientX - r.left) / r.width - 0.5;   /* -0.5〜0.5 */
-            var py = (e.clientY - r.top) / r.height - 0.5;
-            card.classList.add("tilting");
-            card.style.transform = "rotateX(" + (-py * MAX).toFixed(2) + "deg) rotateY(" + (px * MAX).toFixed(2) + "deg) translateY(-4px)";
-          });
-          card.addEventListener("mouseleave", function () {
-            card.classList.remove("tilting");
-            card.style.transform = "";
-          });
-        });
+        var track = document.getElementById("acTrack");
+        if (!track) return;
+        var total = track.children.length;
+        var idx = 0;
+        var bar = document.getElementById("acBar");
+        var num = document.getElementById("acNum");
+        function render() {
+          track.style.transform = "translateX(" + (-idx * 100) + "%)";
+          if (bar) bar.style.width = ((idx + 1) / total * 100).toFixed(2) + "%";
+          if (num) num.textContent = ("0" + (idx + 1)).slice(-2);
+        }
+        function go(n) { idx = (n % total + total) % total; render(); }
+        document.getElementById("acPrev").addEventListener("click", function () { go(idx - 1); });
+        document.getElementById("acNext").addEventListener("click", function () { go(idx + 1); });
+        /* タッチ/ドラッグでスワイプ */
+        var x0 = null;
+        track.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener("touchend", function (e) {
+          if (x0 == null) return;
+          var dx = e.changedTouches[0].clientX - x0;
+          if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+          x0 = null;
+        }, { passive: true });
+        render();
       })();
     </script>
 
