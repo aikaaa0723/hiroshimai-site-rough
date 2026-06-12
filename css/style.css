@@ -591,3 +591,52 @@ body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
 .site-header.over-hero:not(.scrolled) .btn-head { color: #fff; border-color: rgba(255,255,255,.6); }
 .site-header.over-hero:not(.scrolled) .btn-head:hover { background: #fff; color: var(--ink-strong); }
 .site-header.over-hero:not(.scrolled) .nav-burger span { background: #fff; }
+
+/* ============================================================
+   MISSION FEATURE（Sony風：左に細い大きな文、右に段違いの画像コラージュ。
+   各画像はスクロールで方向違いにスライドイン）
+   ============================================================ */
+.mission-feature {
+  position: relative; overflow: hidden; padding: 124px 24px; color: #fff;
+  background: linear-gradient(120deg, #121831 0%, #1d1740 52%, #2a1533 100%);
+}
+.mission-feature::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(42% 52% at 12% 18%, rgba(61,90,171,.40), transparent 60%),
+    radial-gradient(42% 52% at 88% 84%, rgba(214,51,108,.24), transparent 62%);
+}
+.mf-inner {
+  position: relative; max-width: var(--maxw); margin: 0 auto;
+  display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center;
+}
+.mf-kicker { font-family: var(--font-en); font-size: 12px; letter-spacing: .32em; font-weight: 600; color: rgba(255,255,255,.7); margin-bottom: 26px; }
+.mf-statement { font-size: clamp(26px, 3.7vw, 44px); font-weight: 200; line-height: 1.6; letter-spacing: .02em; margin-bottom: 24px; }
+.mf-statement strong { font-weight: 600; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mf-sub { font-size: 14.5px; line-height: 2.05; color: rgba(255,255,255,.78); max-width: 520px; margin-bottom: 30px; }
+.mf-link { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: #fff; }
+.mf-link::after { content: "›"; font-size: 1.25em; line-height: 1; }
+.mf-link:hover { opacity: .82; }
+
+.mf-collage { position: relative; min-height: 500px; }
+.mf-img { position: absolute; border-radius: 12px; overflow: hidden; box-shadow: 0 26px 60px rgba(0,0,0,.42);
+  transition: opacity .8s ease, transform .9s cubic-bezier(.18,.72,.18,1); }
+.mf-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mf-img1 { width: 60%; aspect-ratio: 16 / 11; top: 0; right: 0; z-index: 1; }
+.mf-img2 { width: 42%; aspect-ratio: 4 / 3; top: 30%; left: 0; z-index: 3; transition-delay: .12s; }
+.mf-img3 { width: 48%; aspect-ratio: 16 / 10; bottom: 0; right: 8%; z-index: 2; transition-delay: .24s; }
+
+/* directional reveal（方向アニメ：右/左/下からスライドイン） */
+[data-reveal].rv-right:not(.in) { transform: translateX(56px); }
+[data-reveal].rv-left:not(.in)  { transform: translateX(-56px); }
+[data-reveal].rv-up:not(.in)    { transform: translateY(52px); }
+
+@media (max-width: 900px) {
+  .mission-feature { padding: 88px 24px; }
+  .mf-inner { grid-template-columns: 1fr; gap: 40px; }
+  .mf-collage { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mf-img { position: static; width: auto; aspect-ratio: 16 / 10; box-shadow: 0 14px 30px rgba(0,0,0,.35); }
+  .mf-img2 { grid-column: 1 / -1; }
+  /* モバイルは横スライドを縦スライドに（横スクロール防止） */
+  [data-reveal].rv-right:not(.in), [data-reveal].rv-left:not(.in) { transform: translateY(44px); }
+}
