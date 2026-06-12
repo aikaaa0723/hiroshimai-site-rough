@@ -160,17 +160,6 @@
           d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); });
         });
       })();
-
-      /* ヒーロー背景動画の 再生/一時停止（Sony風コントロール） */
-      (function () {
-        var btn = document.getElementById("heroToggle");
-        var vid = document.querySelector(".hero-video");
-        if (!btn || !vid) return;
-        btn.addEventListener("click", function () {
-          if (vid.paused) { vid.play(); btn.textContent = "❚❚"; btn.setAttribute("aria-pressed", "false"); }
-          else { vid.pause(); btn.textContent = "▶"; btn.setAttribute("aria-pressed", "true"); }
-        });
-      })();
     </script>
 
     <!-- ===== 導入事例 ===== -->
