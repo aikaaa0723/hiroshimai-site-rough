@@ -101,6 +101,9 @@
       '<p class="footer-note" style="max-width:var(--maxw);margin:14px auto 0;">本サイトは企画書 v0.1 に基づく制作中の案です。実績・正式表記など一部は確認中の項目を含みます。</p>' +
     '</footer>';
 
+  /* 多重注入ガード：既存のヘッダー/ドロワー/フッターがあれば除去（重複防止） */
+  document.querySelectorAll(".site-header, .mobile-drawer, .site-footer").forEach(function (el) { el.remove(); });
+
   var hMount = document.getElementById("app-header");
   var fMount = document.getElementById("app-footer");
   if (hMount) hMount.outerHTML = header;
