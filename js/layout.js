@@ -153,4 +153,26 @@
     });
   }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
   items.forEach(function (el) { io.observe(el); });
+
+  /* image parallax（Sony風の控えめなスクロール視差：サムネ画像をゆっくり上下にずらす） */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pxImgs = Array.prototype.slice.call(document.querySelectorAll(".s-thumb img, .case-thumb img, .article-thumb img"));
+  if (pxImgs.length && !reduce) {
+    pxImgs.forEach(function (img) { img.style.willChange = "transform"; img.style.transition = "none"; });
+    var ticking = false;
+    function applyParallax() {
+      var vh = window.innerHeight;
+      pxImgs.forEach(function (img) {
+        var c = img.parentElement.getBoundingClientRect();
+        if (c.bottom < -60 || c.top > vh + 60) return;
+        var prog = (c.top + c.height / 2 - vh / 2) / vh;      /* -0.5〜+0.5 */
+        var shift = Math.max(-15, Math.min(15, prog * -24));   /* px */
+        img.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(1.16)";
+      });
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(applyParallax); } }, { passive: true });
+    window.addEventListener("resize", applyParallax);
+    applyParallax();
+  }
 })();
