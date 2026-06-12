@@ -133,7 +133,8 @@
 
         function setDepth() {
           var w = stage.clientWidth;
-          prism.style.setProperty("--d", (w / 2) + "px");
+          /* w/2 だと閉じた箱（面が辺で接続）。係数を大きくして面同士を離す＝間隔を空ける */
+          prism.style.setProperty("--d", (w * 0.82) + "px");
         }
         function render() {
           var cur = (idx % faces + faces) % faces;

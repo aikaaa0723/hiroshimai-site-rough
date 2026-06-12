@@ -672,7 +672,7 @@ body { background: transparent; }
    SERVICE PRISM（透明な四角柱：各側面に事業画像／タップで回転）
    ============================================================ */
 .prism-wrap { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 4vw, 48px); max-width: var(--maxw); margin: 0 auto; }
-.prism-stage { position: relative; width: clamp(320px, 72vw, 720px); aspect-ratio: 4 / 3; perspective: 2200px; }
+.prism-stage { position: relative; width: clamp(280px, 62vw, 520px); aspect-ratio: 4 / 3; perspective: 2200px; }
 .prism { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2,.8,.2,1); cursor: pointer; }
 /* 透明な四角柱：面は半透明（背面が透けて柱に見える）。正面に来た面のみ不透過に */
 .prism-face {
