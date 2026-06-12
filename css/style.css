@@ -284,8 +284,8 @@ img { max-width: 100%; display: block; }
 
 /* ---------- scroll reveal（Sony風：なめらかなフェード＋スライドアップ、stagger は layout.js が付与） ---------- */
 [data-reveal] {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .9s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1);
   will-change: opacity, transform;
 }
 [data-reveal].in { opacity: 1; transform: none; }
@@ -432,16 +432,16 @@ img { max-width: 100%; display: block; }
    ブランドのグラデはロゴ／主要CTA／アクティブ状態のみに限定。
    ============================================================ */
 :root {
-  --ink: #1a1a1a;            /* Sony の本文＝チャコール */
-  --ink-strong: #0a0a0b;     /* 見出し＝ニアブラック */
-  --ink-soft: #6f6f73;
-  --line: #e4e4e6;
+  --ink: #111111;            /* Sony 本文＝#111 */
+  --ink-strong: #111111;     /* 見出しも #111（Sony は黒一色を基調） */
+  --ink-soft: #555555;       /* Sony サブテキスト */
+  --line: #e5e5e5;           /* Sony ヘアライン */
   --bg: #ffffff;
-  --bg-alt: #f7f7f8;         /* Sony の淡いグレー帯 */
-  --font: "Noto Sans JP", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-en: "Helvetica Neue", Helvetica, Arial, "Noto Sans JP", sans-serif;
+  --bg-alt: #f7f7f8;
+  --font: "Helvetica Neue", Arial, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --font-en: "Helvetica Neue", Arial, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
   --maxw: 1160px;
-  --header-h: 60px;
+  --header-h: 80px;          /* Sony ヘッダー高 */
 }
 body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
 
@@ -707,31 +707,34 @@ body { background: transparent; }
 .prism-hint { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
 
 /* ============================================================
-   UNIFIED HEADER（スクロールで変化しない・常時ダーク＋白ロゴ＝Sony風）
+   UNIFIED HEADER（Sony仕様：白背景・80px・黒文字・スクロールで不変）
    ============================================================ */
 .site-header {
-  background: rgba(13,15,26,.78);
-  backdrop-filter: blur(14px) saturate(1.25);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
-  border-bottom: 1px solid rgba(255,255,255,.10);
+  height: var(--header-h);
+  background: #ffffff;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom: 1px solid var(--line);
   box-shadow: none;
 }
-/* ロゴは常に白文字版（画像）／ダークSVGは隠す */
-.brand-logo.logo-light { display: block; height: 26px; width: auto; }
-.brand-logo.logo-dark { display: none; }
-/* ナビ・トグル・ボタン・バーガーを白系で統一 */
-.global-nav a { color: rgba(255,255,255,.9); }
-.global-nav a:hover, .global-nav a.active { color: #fff; }
-.global-nav a::after { background: var(--grad); }
-.lang-toggle a { color: rgba(255,255,255,.6); }
-.lang-toggle a.on, .lang-toggle .sep { color: #fff; }
-.btn-head { color: #fff; background: none; border: 1px solid rgba(255,255,255,.55); box-shadow: none; }
-.btn-head:hover { background: #fff; color: var(--ink-strong); }
-.nav-burger span { background: #fff; }
-/* モバイルドロワーもダークに */
-.mobile-drawer { background: rgba(15,17,28,.98); border-bottom-color: rgba(255,255,255,.12); }
-.mobile-drawer a { color: #fff; }
-.mobile-drawer li { border-bottom-color: rgba(255,255,255,.12); }
+/* ロゴはダーク版（Hiroshim=#111／AI=マゼンタ）。白文字画像は隠す */
+.brand-logo.logo-light { display: none; }
+.brand-logo.logo-dark { display: block; height: 30px; width: auto; }
+/* ナビ：Sony仕様 14px / 400 / .02em / #111、ホバーは下線＋opacity */
+.global-nav a { color: #111111; font-size: 14px; font-weight: 400; letter-spacing: .02em; transition: opacity .25s ease; }
+.global-nav a:hover { opacity: .55; }
+.global-nav a:hover::after, .global-nav a.active::after { width: 100%; }
+.global-nav a::after { background: #111111; height: 1px; }
+.global-nav a.active { color: #111111; }
+.lang-toggle a { color: #555555; }
+.lang-toggle a.on, .lang-toggle .sep { color: #111111; }
+/* お問い合わせ：控えめなアウトライン（UIは静かに） */
+.btn-head { color: #111111; background: none; border: 1px solid var(--line); box-shadow: none; font-weight: 500; }
+.btn-head:hover { background: #111111; color: #fff; border-color: #111111; }
+.nav-burger span { background: #111111; }
+/* モバイルドロワー：白 */
+.mobile-drawer { background: #ffffff; border-bottom-color: var(--line); }
+.mobile-drawer a { color: #111111; }
+.mobile-drawer li { border-bottom-color: var(--line); }
 
 /* ============================================================
    SONY-STYLE DETAILS（丸い矢印ボタン・ヒーローの再生コントロール）
@@ -796,3 +799,42 @@ body { line-height: 1.9; }
 .hero h1 .grad-text { font-weight: 500; }
 .hero-lead { margin-left: 0; margin-right: 0; max-width: 600px; }
 .hero-actions { justify-content: flex-start; }
+
+/* ============================================================
+   SONY HERO（仕様書準拠：左コピー＋16:9ビジュアルカルーセル＋スライド番号
+   ＋Scroll表示。背景はトンマナの動くグラデを淡い白ベール越しに維持）
+   ============================================================ */
+.hero { text-align: left; color: var(--ink-strong);
+  background: linear-gradient(180deg, rgba(255,255,255,.80) 0%, rgba(255,255,255,.9) 55%, rgba(255,255,255,.96) 100%); }
+.hero-inner { display: grid; grid-template-columns: 0.86fr 1.14fr; gap: 60px; align-items: center; max-width: var(--maxw); width: 100%; margin: 0 auto; }
+.hero-copy { max-width: 520px; }
+.hero-copy h1 { font-family: var(--font); font-size: clamp(32px, 5vw, 72px); font-weight: 500; line-height: 1.35; letter-spacing: .02em; color: #111; margin-bottom: 32px; }
+.hero-copy h1 .grad-text { font-weight: 500; }
+.hero-copy .hero-lead { font-size: clamp(15px, 1.5vw, 17px); font-weight: 400; line-height: 1.9; color: #555; margin: 0 0 40px; max-width: 460px; }
+.hero-actions { justify-content: flex-start; }
+
+/* 16:9 カルーセル（Fade＋Subtle Zoom） */
+.hero-slider { position: relative; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #f1f1f3; box-shadow: 0 24px 60px rgba(17,17,17,.12); }
+.hero-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.02); transition: opacity 1s cubic-bezier(.4,0,.2,1), transform 6.5s ease; }
+.hero-slide.is-active { opacity: 1; transform: scale(1); }
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+.hero-index { position: absolute; right: 16px; bottom: 14px; display: flex; gap: 8px; align-items: center;
+  color: #fff; font-size: 14px; font-weight: 400; letter-spacing: .08em; text-shadow: 0 1px 5px rgba(0,0,0,.45); }
+.hero-index-sep { opacity: .55; }
+
+/* Scroll 表示（仕様書：12px / #333 / 上下に静かに動く） */
+.hero .scroll-hint { font-family: var(--font-en); font-size: 12px; font-weight: 400; letter-spacing: .12em; color: #333; text-transform: none; }
+.hero .scroll-hint::after { background: linear-gradient(#333, transparent); }
+
+/* ロードアニメーション（仕様書タイムライン：コピー0.2s→画像0.4s→Scroll0.8s） */
+@keyframes heroFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy { opacity: 0; animation: heroFadeUp .9s cubic-bezier(.4,0,.2,1) .2s forwards; }
+  .hero-slider { opacity: 0; animation: heroFadeUp 1s cubic-bezier(.4,0,.2,1) .4s forwards; }
+  .hero .scroll-hint { opacity: 0; animation: heroFadeUp .8s ease-out .8s forwards; }
+}
+
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 34px; }
+  .hero-copy { max-width: none; }
+}

@@ -166,8 +166,8 @@
         var c = img.parentElement.getBoundingClientRect();
         if (c.bottom < -60 || c.top > vh + 60) return;
         var prog = (c.top + c.height / 2 - vh / 2) / vh;      /* -0.5〜+0.5 */
-        var shift = Math.max(-15, Math.min(15, prog * -24));   /* px */
-        img.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(1.16)";
+        var shift = Math.max(-8, Math.min(8, prog * -13));     /* px（Sony＝静かなモーション） */
+        img.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(1.07)";
       });
       ticking = false;
     }

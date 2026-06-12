@@ -21,14 +21,23 @@
     <!-- ===== Hero（広島の背景動画＋白文字） ===== -->
     <section class="hero">
       <div class="hero-inner">
-        <h1>AIで広島から、<br /><span class="grad-text">未来を実装する。</span></h1>
-        <p class="hero-lead">構想だけで終わらせず、現場に根付くまで伴走する。<br />地域の中小企業が、AIという武器を本当に使いこなせるように。</p>
-        <div class="hero-actions">
-          <a href="contact.html" class="btn-primary">無料ヒアリングを申し込む</a>
-          <a href="services/index.html" class="btn-ghost">事業案内を見る</a>
+        <div class="hero-copy">
+          <h1>AIで広島から、<br /><span class="grad-text">未来を実装する。</span></h1>
+          <p class="hero-lead">構想だけで終わらせず、現場に根付くまで伴走する。地域の中小企業が、AIという武器を本当に使いこなせるように。</p>
+          <div class="hero-actions">
+            <a href="contact.html" class="btn-primary">無料ヒアリングを申し込む</a>
+            <a href="services/index.html" class="btn-ghost">事業案内を見る</a>
+          </div>
+        </div>
+        <div class="hero-slider" id="heroSlider" aria-hidden="true">
+          <div class="hero-slide is-active"><img src="assets/img-meeting.png" alt="" /></div>
+          <div class="hero-slide"><img src="assets/img-laptop.png" alt="" /></div>
+          <div class="hero-slide"><img src="assets/img-monitors.png" alt="" /></div>
+          <div class="hero-slide"><img src="assets/img-abstract.png" alt="" /></div>
+          <div class="hero-index"><span id="heroNum">01</span><span class="hero-index-sep">/</span><span>04</span></div>
         </div>
       </div>
-      <div class="scroll-hint" aria-hidden="true">SCROLL</div>
+      <div class="scroll-hint" aria-hidden="true">Scroll</div>
     </section>
 
     <!-- ===== Mission（Sony風：左に文／右に画像がモーションで出現） ===== -->
@@ -149,6 +158,24 @@
         dots.forEach(function (d) {
           d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); });
         });
+      })();
+
+      /* ヒーローのビジュアルカルーセル（Sony：Fade＋Subtle Zoom、約6秒、静か） */
+      (function () {
+        var slider = document.getElementById("heroSlider");
+        if (!slider) return;
+        var slides = slider.querySelectorAll(".hero-slide");
+        var num = document.getElementById("heroNum");
+        if (slides.length < 2) return;
+        var i = 0;
+        function show(n) {
+          slides[i].classList.remove("is-active");
+          i = (n % slides.length + slides.length) % slides.length;
+          slides[i].classList.add("is-active");
+          if (num) num.textContent = ("0" + (i + 1)).slice(-2);
+        }
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) setInterval(function () { show(i + 1); }, 6000);
       })();
     </script>
 
