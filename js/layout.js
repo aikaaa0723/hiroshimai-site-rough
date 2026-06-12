@@ -115,16 +115,7 @@
   if (hMount) hMount.outerHTML = header;
   if (fMount) fMount.outerHTML = footer;
 
-  /* header: transparent over hero, solid on scroll（Sony風）。サブページは常時ソリッド */
-  var hdr = document.getElementById("siteHeader");
-  var hero = document.querySelector(".hero");
-  if (hdr && hero) {
-    hdr.classList.add("over-hero");
-    var threshold = function () { return Math.max(hero.offsetHeight - 120, 60); };
-    var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > threshold()); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-  }
+  /* ヘッダーは常時ダーク・白ロゴで統一（スクロールでの切替なし） */
 
   /* mobile drawer */
   var burger = document.getElementById("navBurger");

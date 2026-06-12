@@ -711,3 +711,30 @@ body { background: transparent; }
 .prism-dots button:hover { color: var(--ink-strong); border-color: var(--ink-soft); }
 .prism-dots button.on { color: #fff; background: var(--grad); border-color: transparent; }
 .prism-hint { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
+
+/* ============================================================
+   UNIFIED HEADER（スクロールで変化しない・常時ダーク＋白ロゴ＝Sony風）
+   ============================================================ */
+.site-header {
+  background: rgba(13,15,26,.78);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  box-shadow: none;
+}
+/* ロゴは常に白文字版（画像）／ダークSVGは隠す */
+.brand-logo.logo-light { display: block; height: 26px; width: auto; }
+.brand-logo.logo-dark { display: none; }
+/* ナビ・トグル・ボタン・バーガーを白系で統一 */
+.global-nav a { color: rgba(255,255,255,.9); }
+.global-nav a:hover, .global-nav a.active { color: #fff; }
+.global-nav a::after { background: var(--grad); }
+.lang-toggle a { color: rgba(255,255,255,.6); }
+.lang-toggle a.on, .lang-toggle .sep { color: #fff; }
+.btn-head { color: #fff; background: none; border: 1px solid rgba(255,255,255,.55); box-shadow: none; }
+.btn-head:hover { background: #fff; color: var(--ink-strong); }
+.nav-burger span { background: #fff; }
+/* モバイルドロワーもダークに */
+.mobile-drawer { background: rgba(15,17,28,.98); border-bottom-color: rgba(255,255,255,.12); }
+.mobile-drawer a { color: #fff; }
+.mobile-drawer li { border-bottom-color: rgba(255,255,255,.12); }
