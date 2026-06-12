@@ -651,10 +651,6 @@ body { background: transparent; }
 .mf-link { display: inline-flex; align-items: center; gap: 14px; font-weight: 600; color: var(--ink-strong); }
 .mf-link::after { content: "→"; font-family: var(--font-en); font-size: 16px; width: 42px; height: 42px; flex: none; border: 1px solid var(--line); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: background .35s, color .3s, border-color .3s, transform .35s; }
 .mf-link:hover::after { background: var(--grad); color: #fff; border-color: transparent; transform: translateX(3px); }
-/* 文の背後だけ白を強めて可読性確保（左側の縦帯） */
-.mf-text::before { content: ""; position: absolute; inset: -40px -60px -40px -60px; z-index: -1;
-  background: linear-gradient(90deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.7) 55%, rgba(255,255,255,0) 100%);
-  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 
 @media (max-width: 720px) {
   .mission-feature { min-height: 520px; padding: 92px 22px; }
@@ -866,3 +862,17 @@ body { line-height: 1.9; }
   .section, .mission-feature { padding: 92px 22px; }
   .page-section { padding: 76px 22px; }
 }
+
+/* ============================================================
+   ABOUT 3D TILT（私たちについて：マウス追従の立体チルト・なじむ控えめ動き）
+   ============================================================ */
+.about-3d { perspective: 1100px; }
+.about-3d .s-card { transform-style: preserve-3d; transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .4s ease; }
+.about-3d .s-card.tilting { transition: transform .08s linear, box-shadow .4s ease; }
+.about-3d .s-card .s-thumb { transform: translateZ(28px); transition: box-shadow .4s ease; }
+.about-3d .s-card .s-cat,
+.about-3d .s-card h3 { transform: translateZ(18px); }
+.about-3d .s-card p { transform: translateZ(10px); }
+.about-3d .s-card:hover { box-shadow: 0 30px 60px rgba(20,30,60,.18); }
+@media (hover: none) { .about-3d { perspective: none; } .about-3d .s-card,
+  .about-3d .s-card .s-thumb, .about-3d .s-card .s-cat, .about-3d .s-card h3, .about-3d .s-card p { transform: none; } }

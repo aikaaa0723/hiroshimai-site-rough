@@ -40,11 +40,11 @@
     '</svg>';
 
   var NAV =
-    '<li><a href="' + ROOT + 'about/index.html" class="nav-top' + act(inAbout) + '">About</a></li>' +
-    '<li><a href="' + ROOT + 'services/index.html" class="nav-top' + act(inServices) + '">Service</a></li>' +
+    '<li><a href="' + ROOT + 'about/index.html" class="nav-top' + act(inAbout) + '">私たちについて</a></li>' +
+    '<li><a href="' + ROOT + 'services/index.html" class="nav-top' + act(inServices) + '">事業案内</a></li>' +
     '<li><a href="' + ROOT + 'cases/index.html" class="nav-top' + act(inCases) + '">導入事例</a></li>' +
-    '<li><a href="' + ROOT + 'media/index.html" class="nav-top' + act(inMedia) + '">Media</a></li>' +
-    '<li><a href="' + ROOT + 'news/index.html" class="nav-top' + act(inNews) + '">News</a></li>' +
+    '<li><a href="' + ROOT + 'media/index.html" class="nav-top' + act(inMedia) + '">メディア</a></li>' +
+    '<li><a href="' + ROOT + 'news/index.html" class="nav-top' + act(inNews) + '">お知らせ</a></li>' +
     '<li><a href="' + ROOT + 'recruit/index.html" class="nav-top' + act(inRecruit) + '">採用情報</a></li>';
 
   var header =

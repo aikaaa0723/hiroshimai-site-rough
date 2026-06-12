@@ -54,7 +54,7 @@
         <div><p class="en">ABOUT</p><h2>私たちについて</h2></div>
         <a href="about/index.html" class="more">もっと見る</a>
       </div>
-      <div class="s-grid col3">
+      <div class="s-grid col3 about-3d">
         <a class="s-card" href="about/index.html" data-reveal>
           <div class="s-thumb"><img src="assets/img-abstract.png" alt="" loading="lazy" /></div>
           <p class="s-cat">企業理念</p><h3>Purpose・Mission・Vision</h3>
@@ -206,6 +206,27 @@
         }
         if (!reduce) requestAnimationFrame(frame);
         else { for (var k3 = 0; k3 < tiles.length; k3++) { tiles[k3]._x = W * (0.2 + k3 * 0.12); tiles[k3].style.transform = "translate3d(" + tiles[k3]._x + "px," + tiles[k3]._y + "px,0)"; tiles[k3].style.opacity = "0.5"; } }
+      })();
+
+      /* ===== About：マウス追従の3Dチルト（立体感・なじむ控えめ動き） ===== */
+      (function () {
+        var cards = document.querySelectorAll(".about-3d .s-card");
+        if (!cards.length) return;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var MAX = 7; /* 傾きの最大角（度）控えめ */
+        cards.forEach(function (card) {
+          card.addEventListener("mousemove", function (e) {
+            var r = card.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5;   /* -0.5〜0.5 */
+            var py = (e.clientY - r.top) / r.height - 0.5;
+            card.classList.add("tilting");
+            card.style.transform = "rotateX(" + (-py * MAX).toFixed(2) + "deg) rotateY(" + (px * MAX).toFixed(2) + "deg) translateY(-4px)";
+          });
+          card.addEventListener("mouseleave", function () {
+            card.classList.remove("tilting");
+            card.style.transform = "";
+          });
+        });
       })();
     </script>
 
