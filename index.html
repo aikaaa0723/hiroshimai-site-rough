@@ -33,6 +33,7 @@
         </div>
       </div>
       <div class="scroll-hint" aria-hidden="true">SCROLL</div>
+      <button class="hero-toggle" id="heroToggle" type="button" aria-label="背景動画の再生／一時停止" aria-pressed="false">❚❚</button>
     </section>
 
     <!-- ===== Mission（中央に文／下に画像が右方向へ流れ続ける） ===== -->
@@ -162,6 +163,17 @@
         document.getElementById("prismNext").addEventListener("click", function () { go(idx + 1); });
         dots.forEach(function (d) {
           d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); });
+        });
+      })();
+
+      /* ヒーロー背景動画の 再生/一時停止（Sony風コントロール） */
+      (function () {
+        var btn = document.getElementById("heroToggle");
+        var vid = document.querySelector(".hero-video");
+        if (!btn || !vid) return;
+        btn.addEventListener("click", function () {
+          if (vid.paused) { vid.play(); btn.textContent = "❚❚"; btn.setAttribute("aria-pressed", "false"); }
+          else { vid.pause(); btn.textContent = "▶"; btn.setAttribute("aria-pressed", "true"); }
         });
       })();
     </script>

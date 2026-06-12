@@ -134,16 +134,23 @@
     });
   }
 
-  /* scroll reveal */
+  /* scroll reveal（Sony風：同じ親に並ぶ要素へ段階ディレイ＝stagger を付与） */
   var items = document.querySelectorAll("[data-reveal]");
   if (!("IntersectionObserver" in window) || !items.length) {
     items.forEach(function (el) { el.classList.add("in"); });
     return;
   }
+  var counts = new Map();
+  items.forEach(function (el) {
+    var p = el.parentElement;
+    var n = counts.get(p) || 0;
+    counts.set(p, n + 1);
+    el.style.transitionDelay = Math.min(n * 75, 340) + "ms";
+  });
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
   items.forEach(function (el) { io.observe(el); });
 })();

@@ -282,10 +282,25 @@ img { max-width: 100%; display: block; }
 .copyright { font-size: 12px; opacity: .55; }
 .footer-note { font-size: 11px; opacity: .5; max-width: 560px; }
 
-/* ---------- scroll reveal ---------- */
-[data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+/* ---------- scroll reveal（Sony風：なめらかなフェード＋スライドアップ、stagger は layout.js が付与） ---------- */
+[data-reveal] {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
 [data-reveal].in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+/* 画像サムネは下から拭き上げる clip リビール（Sonyの画像モーション） */
+.s-thumb, .article-thumb, .case-thumb { transition: clip-path 1s cubic-bezier(.22,1,.36,1); }
+[data-reveal]:not(.in) .s-thumb,
+[data-reveal]:not(.in) .article-thumb,
+[data-reveal]:not(.in) .case-thumb { clip-path: inset(0 0 100% 0); }
+[data-reveal].in .s-thumb,
+[data-reveal].in .article-thumb,
+[data-reveal].in .case-thumb { clip-path: inset(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .s-thumb, .article-thumb, .case-thumb { clip-path: none !important; transition: none; }
+}
 
 /* ============================================================
    MULTI-PAGE additions（多ページ化：page-hero / breadcrumb / teaser ほか）
@@ -704,3 +719,37 @@ body { background: transparent; }
 .mobile-drawer { background: rgba(15,17,28,.98); border-bottom-color: rgba(255,255,255,.12); }
 .mobile-drawer a { color: #fff; }
 .mobile-drawer li { border-bottom-color: rgba(255,255,255,.12); }
+
+/* ============================================================
+   SONY-STYLE DETAILS（丸い矢印ボタン・ヒーローの再生コントロール）
+   構成・トンマナは維持し、デザインの所作だけ Sony に寄せる
+   ============================================================ */
+/* もっと見る＝テキスト＋円形の矢印ボタン（Sonyの定番） */
+.s-head .more, .more-link {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 13px; font-weight: 600; color: var(--ink-strong);
+  border: none; padding: 0; background: none; white-space: nowrap;
+}
+.s-head .more::after, .more-link::after {
+  content: "→"; font-family: var(--font-en); font-size: 16px; line-height: 1; color: var(--ink-strong);
+  width: 42px; height: 42px; flex: none; border: 1px solid var(--line); border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .35s cubic-bezier(.22,1,.36,1), color .3s, border-color .3s, transform .35s cubic-bezier(.22,1,.36,1);
+}
+.s-head .more:hover, .more-link:hover { color: var(--ink-strong); background: none; }
+.s-head .more:hover::after, .more-link:hover::after {
+  background: var(--grad); color: #fff; border-color: transparent; transform: translateX(3px);
+}
+
+/* ヒーローの再生/一時停止（Sonyのヒーロー右下のコントロール） */
+.hero-toggle {
+  position: absolute; right: 28px; bottom: 26px; z-index: 3;
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.55); background: rgba(255,255,255,.08);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  color: #fff; font-size: 13px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .25s, transform .25s, border-color .25s;
+}
+.hero-toggle:hover { background: rgba(255,255,255,.18); border-color: #fff; transform: scale(1.06); }
+@media (max-width: 560px) { .hero-toggle { right: 18px; bottom: 18px; width: 42px; height: 42px; } }
