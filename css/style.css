@@ -884,14 +884,15 @@ body { line-height: 1.9; }
 .ac-stage { position: relative; --ac-w: clamp(320px, 44vw, 580px); height: calc(var(--ac-w) * 9 / 16); overflow: hidden; }
 .ac-slide { position: absolute; top: 0; left: 50%; width: var(--ac-w); aspect-ratio: 16 / 9;
   border-radius: 8px; overflow: hidden; background: var(--bg-alt); cursor: pointer;
-  transform: translateX(-50%) scale(.82); filter: blur(12px); opacity: .5;
+  transform: translateX(-50%); filter: blur(12px); opacity: .55;
   transition: transform .75s cubic-bezier(.4,0,.2,1), filter .75s ease, opacity .75s ease;
   will-change: transform, filter, opacity; }
 .ac-slide img { width: 100%; height: 100%; object-fit: cover; }
 .ac-slide.is-active { filter: blur(0); opacity: 1; cursor: default; box-shadow: 0 28px 64px rgba(20,30,60,.22); }
 
-.ac-bottom { display: flex; align-items: flex-start; justify-content: center; gap: 44px; max-width: 880px; margin: 40px auto 0; }
-.ac-controls { display: flex; flex-direction: column; gap: 18px; flex: none; }
+/* 下段：矢印/番号は左下、見出し＋説明はピント画像の真下（marginLeft/widthはJSが設定） */
+.ac-bottom { position: relative; max-width: var(--maxw); margin: 40px auto 0; min-height: 130px; }
+.ac-controls { position: absolute; left: 0; top: 4px; display: flex; flex-direction: column; gap: 18px; }
 .ac-arrows { display: flex; gap: 14px; }
 .ac-arrow { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.55);
   color: var(--ink-strong); font-family: var(--font-en); font-size: 18px; line-height: 1; cursor: pointer;
@@ -902,15 +903,15 @@ body { line-height: 1.9; }
 .ac-num { font-family: var(--font-en); font-size: 14px; letter-spacing: .08em; color: var(--ink-soft); }
 .ac-num span { color: var(--ink-strong); font-weight: 600; }
 
-.ac-cap { display: block; flex: 1; min-width: 0; max-width: 560px; color: inherit; }
+.ac-cap { display: block; color: inherit; }
 .ac-cat { font-family: var(--font-en); font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--ink-soft); }
 .ac-cap h3 { font-size: clamp(19px, 2.2vw, 26px); font-weight: 700; margin-top: 8px; color: var(--ink-strong); line-height: 1.45; }
 .ac-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.95; }
 
 @media (max-width: 760px) {
   .ac-stage { --ac-w: 76vw; }
-  .ac-bottom { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
-  .ac-controls { flex-direction: row; align-items: center; gap: 16px; }
+  .ac-bottom { min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+  .ac-controls { position: static; flex-direction: row; align-items: center; gap: 16px; }
   .ac-arrow { width: 46px; height: 46px; font-size: 16px; }
   .ac-cap { text-align: center; }
 }
