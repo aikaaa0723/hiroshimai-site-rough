@@ -1004,3 +1004,16 @@ body { line-height: 1.9; }
   .nr-all { margin-top: 28px; }
   .nr-item { padding: 26px 44px 28px 0; }
 }
+
+/* ============================================================
+   [cand-japan] ヒーロー動画の色味をサイト背景（ブランドのグラデ）に合わせる
+   pale な japan.mp4 にブランド配色を multiply で重ね、青→紫→マゼンタへ寄せる。
+   .hero に isolation を付け、ブレンドが動画だけに掛かるようにする。
+   ============================================================ */
+.hero { isolation: isolate; }
+.hero-tint {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(120deg, rgb(28,82,255) 0%, rgb(150,46,240) 48%, rgb(240,18,118) 100%);
+  mix-blend-mode: multiply;
+  opacity: .92;
+}
