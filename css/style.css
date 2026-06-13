@@ -668,7 +668,6 @@ body { background: transparent; }
   position: absolute; inset: 0; display: block; border-radius: 16px; overflow: hidden;
   background: rgba(14,16,32,.18); color: #fff;
   border: 1px solid rgba(255,255,255,.45);
-  box-shadow: 0 40px 90px rgba(8,12,34,.4);
   opacity: .34;
   transition: opacity 1s cubic-bezier(.2,.8,.2,1);
 }
