@@ -78,45 +78,42 @@
       </div>
     </section>
 
-    <!-- ===== Service（透明な四角柱：タップで回転して各事業を見る） ===== -->
-    <section class="section alt">
-      <div class="s-head" data-reveal>
-        <div><p class="en">SERVICE</p><h2>事業案内</h2></div>
-        <a href="services/index.html" class="more">もっと見る</a>
-      </div>
-
-      <div class="prism-wrap" data-reveal>
-        <button class="prism-nav prev" id="prismPrev" type="button" aria-label="前の事業">‹</button>
-
-        <div class="prism-stage">
-          <div class="prism" id="prism">
-            <a class="prism-face" href="services/index.html#training" data-i="0">
-              <img src="assets/img-meeting.png" alt="" />
-              <span class="pf-cap"><b class="pf-num">01</b><b class="pf-title">AI研修</b><span class="pf-sub">触れる→業務に組み込む。実質5万円。</span></span>
-            </a>
-            <a class="prism-face" href="services/index.html#advisory" data-i="1">
-              <img src="assets/img-laptop.png" alt="" />
-              <span class="pf-cap"><b class="pf-num">02</b><b class="pf-title">AI顧問</b><span class="pf-sub">外部CTOとして経営に伴走。4プラン。</span></span>
-            </a>
-            <a class="prism-face" href="services/index.html#dev" data-i="2">
-              <img src="assets/img-monitors.png" alt="" />
-              <span class="pf-cap"><b class="pf-num">03</b><b class="pf-title">AIシステム開発</b><span class="pf-sub">業務に根付くシステムをフルオーダー。</span></span>
-            </a>
-            <a class="prism-face" href="services/index.html#iot" data-i="3">
-              <img src="assets/img-abstract.png" alt="" />
-              <span class="pf-cap"><b class="pf-num">04</b><b class="pf-title">IoT開発</b><span class="pf-sub">現場の課題をセンサー×AIで見える化。</span></span>
-            </a>
+    <!-- ===== Service（スクロール連動でピン留め・事業が順に進む＝Sony Creator Stories風） ===== -->
+    <section class="scrolly" id="svcScrolly">
+      <div class="scrolly-sticky">
+        <div class="sc-head">
+          <div>
+            <p class="sc-eyebrow">SERVICE</p>
+            <h2 class="sc-title">事業案内</h2>
           </div>
+          <a class="sc-more" href="services/index.html">事業案内を見る <span class="sc-arrow" aria-hidden="true">↗</span></a>
         </div>
 
-        <button class="prism-nav next" id="prismNext" type="button" aria-label="次の事業">›</button>
-      </div>
+        <div class="sc-slides">
+          <article class="sc-slide is-active">
+            <a class="sc-img" href="services/index.html#training"><img src="assets/img-meeting.png" alt="" /></a>
+            <div class="sc-text"><p class="sc-num">01</p><h3>AI研修</h3><p class="sc-desc">基礎→実践→自動化の3STEPで「触れる」から「業務に組み込める」へ。補助金活用で実質5万円。</p><div class="sc-tags">#基礎 #実践 #自動化</div></div>
+          </article>
+          <article class="sc-slide">
+            <a class="sc-img" href="services/index.html#advisory"><img src="assets/img-laptop.png" alt="" /></a>
+            <div class="sc-text"><p class="sc-num">02</p><h3>AI顧問</h3><p class="sc-desc">外部CTO・AI顧問として、戦略策定から実装まで経営に伴走。チャット相談し放題、選べる4プラン。</p><div class="sc-tags">#戦略 #エージェント #4プラン</div></div>
+          </article>
+          <article class="sc-slide">
+            <a class="sc-img" href="services/index.html#dev"><img src="assets/img-monitors.png" alt="" /></a>
+            <div class="sc-text"><p class="sc-num">03</p><h3>AIシステム開発</h3><p class="sc-desc">「作って終わり」ではなく、業務に根付くシステムを要件定義から運用までフルオーダーで。</p><div class="sc-tags">#カスタムAI #業務自動化 #内製化</div></div>
+          </article>
+          <article class="sc-slide">
+            <a class="sc-img" href="services/index.html#iot"><img src="assets/img-abstract.png" alt="" /></a>
+            <div class="sc-text"><p class="sc-num">04</p><h3>IoT開発</h3><p class="sc-desc">現場の「見えない課題」を、センサー×AIで見える化。製造・物流・農業など、あらゆる現場のDXを実装レベルで。</p><div class="sc-tags">#製造 #物流 #農業</div></div>
+          </article>
+        </div>
 
-      <div class="prism-dots" id="prismDots" role="tablist" aria-label="事業の切り替え">
-        <button class="on" type="button" data-i="0">AI研修</button>
-        <button type="button" data-i="1">AI顧問</button>
-        <button type="button" data-i="2">AIシステム開発</button>
-        <button type="button" data-i="3">IoT開発</button>
+        <div class="sc-progress" aria-hidden="true">
+          <span class="sc-pg on"></span>
+          <span class="sc-pg"></span>
+          <span class="sc-pg"></span>
+          <span class="sc-pg"></span>
+        </div>
       </div>
     </section>
 
@@ -156,6 +153,34 @@
         /* このスクリプトより後ろにある導入事例の四角柱も初期化するため、DOM構築後に実行 */
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAllPrisms);
         else initAllPrisms();
+      })();
+
+      /* ===== Service スクロール連動（ピン留め中、スクロール量で事業が進む） ===== */
+      (function () {
+        var section = document.getElementById("svcScrolly");
+        if (!section) return;
+        var slides = Array.prototype.slice.call(section.querySelectorAll(".sc-slide"));
+        var pgs = Array.prototype.slice.call(section.querySelectorAll(".sc-pg"));
+        var N = slides.length;
+        var cur = -1, ticking = false;
+        function update() {
+          ticking = false;
+          if (window.innerWidth <= 760) { if (cur !== -1) { cur = -1; } return; }
+          var vh = window.innerHeight;
+          var top = section.getBoundingClientRect().top;       /* 区間先頭の位置 */
+          var total = section.offsetHeight - vh;               /* 区間内のスクロール距離 */
+          var scrolled = Math.min(Math.max(-top, 0), total);
+          var progress = total > 0 ? scrolled / total : 0;     /* 0〜1 */
+          var i = Math.max(0, Math.min(N - 1, Math.floor(progress * N - 1e-6)));
+          if (i !== cur) {
+            cur = i;
+            slides.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
+            pgs.forEach(function (p, k) { p.classList.toggle("on", k === i); });
+          }
+        }
+        window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+        window.addEventListener("resize", update);
+        update();
       })();
 
       /* ===== Mission：画像が左→右へ流れ続ける（横66%で不透過・離れるほど透過） ===== */
