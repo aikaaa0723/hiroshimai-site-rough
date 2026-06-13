@@ -632,7 +632,7 @@ body { background: transparent; }
 .mission-feature {
   position: relative; overflow: hidden; min-height: 620px; display: flex; align-items: center;
   padding: 128px 24px; color: var(--ink);
-  background: rgba(255,255,255,.60); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+  background: rgba(255,255,255,.78); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
 }
 .mission-feature::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -926,7 +926,7 @@ body { line-height: 1.9; }
 .scrolly { position: relative; height: 380vh; }   /* N=4 → 約95vh/事業ぶんスクロール */
 .scrolly-sticky { position: sticky; top: 0; height: 100vh; min-height: 600px; overflow: hidden;
   display: flex; flex-direction: column; padding: calc(var(--header-h) + 44px) 48px 56px;
-  background: rgba(255,255,255,.66); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  background: rgba(255,255,255,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 /* 見出しは他セクションと同じ .s-head を使用（フォントを全体と統一） */
 .scrolly-sticky .s-head { margin-bottom: 0; }
 
