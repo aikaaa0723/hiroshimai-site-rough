@@ -227,16 +227,29 @@
         var idx = 0;
         var bar = document.getElementById("acBar"), num = document.getElementById("acNum");
         var elCat = document.getElementById("acCat"), elTitle = document.getElementById("acTitle"), elDesc = document.getElementById("acDesc");
-        function render() {
+        function pos(rel, active) {
           var step = slides[0].getBoundingClientRect().width * 0.74;
+          var shift = stage.getBoundingClientRect().width * 0.16; /* 画像をやや右寄りに */
+          return "translateX(calc(-50% + " + (rel * step + shift).toFixed(1) + "px)) scale(" + (active ? 1 : 0.82) + ")";
+        }
+        function render(dir) {
           slides.forEach(function (s, i) {
             var rel = i - idx;
             if (rel > N / 2) rel -= N;
             if (rel < -N / 2) rel += N;
+            var prev = (s._rel == null) ? rel : s._rel;
+            /* 折り返し（左右の端をまたぐ移動）は、矢印方向の外側へ瞬間移動してから回り込ませる */
+            if (dir && Math.abs(rel - prev) > 1) {
+              s.style.transition = "none";
+              s.style.transform = pos(dir > 0 ? (N / 2 + 1) : -(N / 2 + 1), false);
+              void s.offsetWidth; /* reflow で位置確定 */
+              s.style.transition = "";
+            }
             var active = rel === 0;
-            s.style.transform = "translateX(calc(-50% + " + (rel * step).toFixed(1) + "px)) scale(" + (active ? 1 : 0.82) + ")";
+            s.style.transform = pos(rel, active);
             s.style.zIndex = active ? 3 : (2 - Math.abs(rel));
             s.classList.toggle("is-active", active);
+            s._rel = rel;
           });
           if (bar) bar.style.width = ((idx + 1) / N * 100).toFixed(2) + "%";
           if (num) num.textContent = ("0" + (idx + 1)).slice(-2);
@@ -245,11 +258,11 @@
           if (elTitle) elTitle.textContent = d.title || "";
           if (elDesc) elDesc.textContent = d.desc || "";
         }
-        function go(n) { idx = (n % N + N) % N; render(); }
-        document.getElementById("acPrev").addEventListener("click", function () { go(idx - 1); });
-        document.getElementById("acNext").addEventListener("click", function () { go(idx + 1); });
-        slides.forEach(function (s, i) { s.addEventListener("click", function () { if (i !== idx) go(i); }); });
-        window.addEventListener("resize", render);
+        function go(n, dir) { idx = (n % N + N) % N; render(dir); }
+        document.getElementById("acPrev").addEventListener("click", function () { go(idx - 1, -1); });
+        document.getElementById("acNext").addEventListener("click", function () { go(idx + 1, 1); });
+        slides.forEach(function (s, i) { s.addEventListener("click", function () { if (i !== idx) go(i, i > idx ? 1 : -1); }); });
+        window.addEventListener("resize", function () { render(); });
         render();
       })();
     </script>
