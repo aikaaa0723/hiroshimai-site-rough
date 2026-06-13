@@ -1,0 +1,47 @@
+/* ============================================================
+   DARK THEME（トンマナ＝ブランドのグラデ背景は維持。本文パネルを暗転）
+   style.css の後に読み込む。CSS変数の再定義＋半透明パネルの暗転が中心。
+   ヘッダー/フッターは元から暗いので踏襲する。
+   ============================================================ */
+:root {
+  --ink: #e9ebf2;            /* 本文＝明色 */
+  --ink-strong: #ffffff;     /* 見出し */
+  --ink-soft: #a6acba;       /* 補助テキスト */
+  --line: rgba(255,255,255,.16);  /* ヘアライン */
+  --bg: #0b0d13;
+  --bg-alt: rgba(255,255,255,.06);
+}
+body { background: #0b0d13; }
+
+/* 本文セクション＝暗い半透明パネル（背面のブランドグラデを透かす＝トンマナ維持） */
+.section,
+.section.alt,
+.mission-feature,
+.page-section,
+.page-section.alt,
+.scrolly-sticky,
+.page-hero,
+.breadcrumb,
+.cta.section {
+  background: rgba(12,14,21,.62);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+/* ヒーロー：元から動画＋暗スクリム＋白文字。動画未読込時のフォールバックを暗色に */
+.hero { background: #0b0d13; }
+
+/* カードのサムネ土台を暗色に */
+.s-thumb { background: linear-gradient(135deg, #1b1e27 0%, #23262f 100%); }
+.s-thumb .ph { color: #6b7280; }
+.s-card:hover h3 { color: #ffffff; }
+
+/* News Releases の丸ボタン：ホバーは白地＋暗文字（白×白で潰れるのを防ぐ） */
+.nr-all:hover .nr-allbtn { background: #ffffff; color: #0b0d13; border-color: #ffffff; }
+
+/* フォーム入力：暗いフィールドに */
+.form-row input, .form-row textarea, .form-row select { background: rgba(255,255,255,.06); color: var(--ink); }
+.form-row input::placeholder, .form-row textarea::placeholder { color: var(--ink-soft); }
+
+/* プレースホルダ枠の微調整 */
+.placeholder-note { background: rgba(255,255,255,.05); }
