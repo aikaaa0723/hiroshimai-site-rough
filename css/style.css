@@ -897,7 +897,7 @@ body { line-height: 1.9; }
 .ac-track { display: flex; transition: transform .7s cubic-bezier(.4,0,.2,1); will-change: transform; }
 /* 1スライド＝大きな画像（上）＋見出し・説明（下） */
 .ac-slide { flex: 0 0 100%; min-width: 0; display: block; }
-.ac-img { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--bg-alt); box-shadow: 0 24px 56px rgba(20,30,60,.16); }
+.ac-img { display: block; width: 66.67%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--bg-alt); box-shadow: 0 24px 56px rgba(20,30,60,.16); }
 .ac-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
 .ac-img:hover img { transform: scale(1.03); }
 .ac-cap { margin-top: 22px; }
@@ -910,4 +910,5 @@ body { line-height: 1.9; }
   .ac-controls { flex-direction: row; align-items: center; gap: 16px; order: 2; padding-bottom: 0; }
   .ac-bar { flex: 1; }
   .ac-arrow { width: 46px; height: 46px; font-size: 16px; }
+  .ac-img { width: 100%; }
 }
