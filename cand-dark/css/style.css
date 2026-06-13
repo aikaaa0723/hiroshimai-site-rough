@@ -1004,3 +1004,10 @@ body { line-height: 1.9; }
   .nr-all { margin-top: 28px; }
   .nr-item { padding: 26px 44px 28px 0; }
 }
+/* ============================================================
+   トップ見出しの共通化：News/Recruit を他セクション(.s-head)と同じ表現へ
+   小さいENラベル(大文字)＋太字の和文見出し。2カラムのレイアウトは維持。
+   ============================================================ */
+.nr-head .en { font-family: var(--font-en); font-size: 12px; font-weight: 600; letter-spacing: .22em; color: var(--ink-soft); }
+.nr-head h2 { font-size: clamp(24px, 3.2vw, 33px); font-weight: 700; color: var(--ink-strong); letter-spacing: .01em; line-height: 1.4; margin-top: 8px; }
+.nr-head .nr-all { margin-top: 38px; }
