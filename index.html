@@ -121,42 +121,41 @@
     </section>
 
     <script>
+      /* 透明な四角柱（事業案内・導入事例で共通。ページ内の全 .prism を初期化） */
       (function () {
-        var prism = document.getElementById("prism");
-        if (!prism) return;
-        var stage = prism.parentElement;
-        var faceEls = Array.prototype.slice.call(prism.querySelectorAll(".prism-face"));
-        var faces = faceEls.length;
-        var dots = Array.prototype.slice.call(document.querySelectorAll("#prismDots button"));
-        var idx = 0;
-
-        function setDepth() {
-          var w = stage.clientWidth;
-          /* w/2 だと閉じた箱（面が辺で接続）。係数を大きくして面同士を離す＝間隔を空ける */
-          prism.style.setProperty("--d", (w * 0.82) + "px");
+        function initPrism(prism) {
+          var stage = prism.parentElement;
+          var wrap = stage.parentElement;
+          var section = prism.closest("section");
+          var faceEls = Array.prototype.slice.call(prism.querySelectorAll(".prism-face"));
+          var faces = faceEls.length;
+          var dots = section ? Array.prototype.slice.call(section.querySelectorAll(".prism-dots button")) : [];
+          var prev = wrap.querySelector(".prism-nav.prev");
+          var next = wrap.querySelector(".prism-nav.next");
+          var idx = 0;
+          function setDepth() {
+            /* w/2 だと閉じた箱（面が辺で接続）。係数を大きくして面同士を離す＝間隔を空ける */
+            prism.style.setProperty("--d", (stage.clientWidth * 0.82) + "px");
+          }
+          function render() {
+            var cur = (idx % faces + faces) % faces;
+            prism.style.transform = "translateZ(calc(var(--d) * -1)) rotateY(" + (-idx * 90) + "deg)";
+            dots.forEach(function (d, i) { d.classList.toggle("on", i === cur); });
+            faceEls.forEach(function (f, i) { f.classList.toggle("is-front", i === cur); }); /* 正面の面だけ不透過に */
+          }
+          function go(n) { idx = (n % faces + faces) % faces; render(); }
+          setDepth();
+          go(0);
+          window.addEventListener("resize", function () { setDepth(); render(); });
+          prism.addEventListener("click", function (e) { e.preventDefault(); go(idx + 1); });
+          if (prev) prev.addEventListener("click", function () { go(idx - 1); });
+          if (next) next.addEventListener("click", function () { go(idx + 1); });
+          dots.forEach(function (d) { d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); }); });
         }
-        function render() {
-          var cur = (idx % faces + faces) % faces;
-          prism.style.transform = "translateZ(calc(var(--d) * -1)) rotateY(" + (-idx * 90) + "deg)";
-          dots.forEach(function (d, i) { d.classList.toggle("on", i === cur); });
-          faceEls.forEach(function (f, i) { f.classList.toggle("is-front", i === cur); }); /* 正面の面だけ不透過に */
-        }
-        function go(n) { idx = (n % faces + faces) % faces; render(); }
-
-        setDepth();
-        go(0);
-        window.addEventListener("resize", function () { setDepth(); render(); });
-
-        // タップ/クリックで次へ（リンク遷移は抑制して回転を優先）
-        prism.addEventListener("click", function (e) {
-          e.preventDefault();
-          go(idx + 1);
-        });
-        document.getElementById("prismPrev").addEventListener("click", function () { go(idx - 1); });
-        document.getElementById("prismNext").addEventListener("click", function () { go(idx + 1); });
-        dots.forEach(function (d) {
-          d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); });
-        });
+        function initAllPrisms() { Array.prototype.slice.call(document.querySelectorAll(".prism")).forEach(initPrism); }
+        /* このスクリプトより後ろにある導入事例の四角柱も初期化するため、DOM構築後に実行 */
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAllPrisms);
+        else initAllPrisms();
       })();
 
       /* ===== Mission：画像が左→右へ流れ続ける（横66%で不透過・離れるほど透過） ===== */
@@ -286,10 +285,38 @@
         <div><p class="en">CASES</p><h2>導入事例</h2></div>
         <a href="cases/index.html" class="more">もっと見る</a>
       </div>
-      <div class="s-grid col3">
-        <a class="s-card" href="cases/index.html" data-reveal><div class="s-thumb"><img src="assets/img-monitors.png" alt="" loading="lazy" /></div><p class="s-cat">AI研修 ・ 業務自動化</p><h3>導入事例は準備中です</h3><p>公開可能な事例を順次掲載します。</p></a>
-        <a class="s-card" href="cases/index.html" data-reveal><div class="s-thumb"><img src="assets/img-laptop.png" alt="" loading="lazy" /></div><p class="s-cat">AI顧問</p><h3>導入事例は準備中です</h3><p>成果指標とともにご紹介予定です。</p></a>
-        <a class="s-card" href="cases/index.html" data-reveal><div class="s-thumb"><img src="assets/img-meeting.png" alt="" loading="lazy" /></div><p class="s-cat">受託開発 ・ IoT</p><h3>導入事例は準備中です</h3><p>現場での実装・定着の様子を掲載予定です。</p></a>
+      <div class="prism-wrap" data-reveal>
+        <button class="prism-nav prev" type="button" aria-label="前の事例">‹</button>
+
+        <div class="prism-stage">
+          <div class="prism">
+            <a class="prism-face" href="cases/index.html" data-i="0">
+              <img src="assets/img-monitors.png" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 01</b><b class="pf-title">AI研修 ・ 業務自動化</b><span class="pf-sub">導入事例は準備中です。順次掲載します。</span></span>
+            </a>
+            <a class="prism-face" href="cases/index.html" data-i="1">
+              <img src="assets/img-laptop.png" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 02</b><b class="pf-title">AI顧問</b><span class="pf-sub">成果指標とともにご紹介予定です。</span></span>
+            </a>
+            <a class="prism-face" href="cases/index.html" data-i="2">
+              <img src="assets/img-meeting.png" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 03</b><b class="pf-title">受託開発 ・ IoT</b><span class="pf-sub">現場での実装・定着の様子を掲載予定。</span></span>
+            </a>
+            <a class="prism-face" href="cases/index.html" data-i="3">
+              <img src="assets/img-abstract.png" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 04</b><b class="pf-title">製造・物流・農業</b><span class="pf-sub">IoT×AIで現場のデータを見える化。</span></span>
+            </a>
+          </div>
+        </div>
+
+        <button class="prism-nav next" type="button" aria-label="次の事例">›</button>
+      </div>
+
+      <div class="prism-dots" role="tablist" aria-label="事例の切り替え">
+        <button class="on" type="button" data-i="0">CASE 01</button>
+        <button type="button" data-i="1">CASE 02</button>
+        <button type="button" data-i="2">CASE 03</button>
+        <button type="button" data-i="3">CASE 04</button>
       </div>
     </section>
 
