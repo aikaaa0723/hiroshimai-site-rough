@@ -594,25 +594,28 @@ body { color: var(--ink); font-weight: 400; letter-spacing: .012em; }
     linear-gradient(120deg, #1a2358 0%, #281b58 52%, #371744 100%);
   background-size: 200% 200%, 200% 200%, 220% 220%, 200% 200%, 100% 100%;
   background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0;
-  animation: heroDrift 34s ease-in-out infinite;
+  animation: heroDrift 18s ease-in-out infinite;
 }
 @keyframes heroDrift {
-  0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0; }
-  50%  { background-position: 100% 60%, 0% 70%, 90% 10%, 60% 30%, 0 0; }
-  100% { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0; }
+  0%   { background-position: 0% 0%,   100% 0%,  50% 100%, 0% 100%, 0 0; }
+  25%  { background-position: 80% 40%, 20% 50%,  80% 20%, 40% 60%, 0 0; }
+  50%  { background-position: 100% 100%, 0% 100%, 100% 0%, 100% 0%, 0 0; }
+  75%  { background-position: 30% 70%, 70% 30%,  20% 80%, 80% 20%, 0 0; }
+  100% { background-position: 0% 0%,   100% 0%,  50% 100%, 0% 100%, 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { .site-bg { animation: none; } }
 
 /* ===== セクションを半透明にして、動く背景を透かす（白地は維持して可読性確保） ===== */
 body { background: transparent; }
-.section { background: rgba(255,255,255,.80); backdrop-filter: blur(7px) saturate(1.05); -webkit-backdrop-filter: blur(7px) saturate(1.05); }
-.section.alt { background: rgba(255,255,255,.62); }
-.mission-feature { background: rgba(255,255,255,.80); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
-.page-section { background: rgba(255,255,255,.80); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
-.page-section.alt { background: rgba(255,255,255,.62); }
-.page-hero { background: rgba(247,247,248,.66); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-.breadcrumb { background: rgba(255,255,255,.7); }
-.cta.section { background: rgba(247,247,248,.55); }
+/* セクションの背景は全部そろえる（交互の色分けはしない） */
+.section { background: rgba(255,255,255,.78); backdrop-filter: blur(7px) saturate(1.05); -webkit-backdrop-filter: blur(7px) saturate(1.05); }
+.section.alt { background: rgba(255,255,255,.78); }
+.mission-feature { background: rgba(255,255,255,.78); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.page-section { background: rgba(255,255,255,.78); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.page-section.alt { background: rgba(255,255,255,.78); }
+.page-hero { background: rgba(255,255,255,.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.breadcrumb { background: rgba(255,255,255,.78); }
+.cta.section { background: rgba(255,255,255,.78); }
 /* a-x.inc 風：太い大きな宣言文（白動画ではなく明るい背景なのでダーク文字） */
 .hero h1 { color: var(--ink-strong); font-weight: 700; letter-spacing: 0; line-height: 1.32; }
 .hero-lead { color: var(--ink-soft); margin-left: auto; margin-right: auto; font-weight: 400; }
@@ -853,14 +856,15 @@ body { line-height: 1.9; }
 /* ============================================================
    余白拡大（各構成部の縦幅を大きく・HP全体にゆとり）
    ============================================================ */
-.section { padding: 160px 24px; }
-.mission-feature { padding: 160px 24px; }
-.page-section { padding: 128px 24px; }
-.s-head { margin-bottom: 60px; }
-.section-head { margin-bottom: 64px; }
+.section { padding: 220px 24px; }
+.mission-feature { padding: 220px 24px; }
+.page-section { padding: 150px 24px; }
+.s-head { margin-bottom: 84px; }
+.section-head { margin-bottom: 88px; }
 @media (max-width: 720px) {
-  .section, .mission-feature { padding: 92px 22px; }
-  .page-section { padding: 76px 22px; }
+  .section, .mission-feature { padding: 110px 22px; }
+  .page-section { padding: 84px 22px; }
+  .s-head, .section-head { margin-bottom: 56px; }
 }
 
 /* ============================================================
