@@ -45,3 +45,15 @@ body { background: #0b0d13; }
 
 /* プレースホルダ枠の微調整 */
 .placeholder-note { background: rgba(255,255,255,.05); }
+/* ============================================================
+   背景（ブランドのグラデ）をダーク用に低彩度＋暗めへ
+   ※ style.css の .site-bg を上書き（layer数・size/position/animationは踏襲）
+   ============================================================ */
+.site-bg {
+  background:
+    radial-gradient(48% 60% at 16% 22%, rgba(44,60,104,.46) 0%, rgba(44,60,104,.24) 40%, transparent 72%),
+    radial-gradient(52% 62% at 84% 16%, rgba(78,54,104,.42) 0%, rgba(78,54,104,.22) 40%, transparent 72%),
+    radial-gradient(58% 68% at 74% 84%, rgba(108,48,80,.40) 0%, rgba(108,48,80,.20) 42%, transparent 74%),
+    radial-gradient(46% 58% at 24% 92%, rgba(38,56,96,.38) 0%, rgba(38,56,96,.18) 40%, transparent 70%),
+    linear-gradient(120deg, #080c1c 0%, #110b22 50%, #190a16 100%);
+}
