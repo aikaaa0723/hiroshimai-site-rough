@@ -928,7 +928,7 @@ body { line-height: 1.9; }
   display: flex; flex-direction: column; padding: calc(var(--header-h) + 44px) 48px 56px;
   background: rgba(255,255,255,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 /* 見出しは他セクションと同じ .s-head を使用（フォントを全体と統一） */
-.scrolly-sticky .s-head { margin-bottom: 0; }
+.scrolly-sticky .s-head { width: 100%; margin-bottom: 0; }
 
 .sc-slides { position: relative; flex: 1; max-width: var(--maxw); width: 100%; margin: 28px auto 0; }
 .sc-slide { position: absolute; inset: 0; display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center;
