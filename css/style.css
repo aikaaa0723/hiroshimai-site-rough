@@ -880,8 +880,9 @@ body { line-height: 1.9; }
 /* ============================================================
    ABOUT CAROUSEL（左に矢印＋進捗/番号、右に画像＋説明がスワイプ＝Sony風）
    ============================================================ */
-.about-carousel { display: grid; grid-template-columns: 196px 1fr; gap: 52px; align-items: center; max-width: var(--maxw); margin: 0 auto; }
-.ac-controls { display: flex; flex-direction: column; gap: 26px; }
+/* Sonyヒーロー配置：大画像が右上／左下に矢印＋進捗＋番号／画像の下に見出し＋説明 */
+.about-carousel { display: grid; grid-template-columns: 148px 1fr; gap: 44px; align-items: end; max-width: var(--maxw); margin: 0 auto; }
+.ac-controls { display: flex; flex-direction: column; gap: 20px; padding-bottom: 8px; }
 .ac-arrows { display: flex; gap: 14px; }
 .ac-arrow { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.55);
   color: var(--ink-strong); font-family: var(--font-en); font-size: 18px; line-height: 1; cursor: pointer;
@@ -894,21 +895,19 @@ body { line-height: 1.9; }
 
 .ac-viewport { overflow: hidden; }
 .ac-track { display: flex; transition: transform .7s cubic-bezier(.4,0,.2,1); will-change: transform; }
-/* 1スライド＝画像（小さめ）＋説明 を横並びに */
-.ac-slide { flex: 0 0 100%; min-width: 0; display: flex; gap: 40px; align-items: center; }
-.ac-img { flex: 0 0 42%; max-width: 420px; aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden; background: var(--bg-alt); box-shadow: 0 18px 44px rgba(20,30,60,.14); }
+/* 1スライド＝大きな画像（上）＋見出し・説明（下） */
+.ac-slide { flex: 0 0 100%; min-width: 0; display: block; }
+.ac-img { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--bg-alt); box-shadow: 0 24px 56px rgba(20,30,60,.16); }
 .ac-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
 .ac-img:hover img { transform: scale(1.03); }
-.ac-cap { flex: 1; min-width: 0; }
+.ac-cap { margin-top: 22px; }
 .ac-cat { font-family: var(--font-en); font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--ink-soft); }
-.ac-cap h3 { font-size: clamp(19px, 2.2vw, 25px); font-weight: 700; margin-top: 8px; color: var(--ink-strong); line-height: 1.4; }
-.ac-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 12px; line-height: 1.95; }
+.ac-cap h3 { font-size: clamp(19px, 2.2vw, 26px); font-weight: 700; margin-top: 8px; color: var(--ink-strong); line-height: 1.45; }
+.ac-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.95; max-width: 760px; }
 
 @media (max-width: 760px) {
-  .about-carousel { grid-template-columns: 1fr; gap: 24px; }
-  .ac-controls { flex-direction: row; align-items: center; gap: 16px; order: 2; }
+  .about-carousel { grid-template-columns: 1fr; gap: 22px; align-items: stretch; }
+  .ac-controls { flex-direction: row; align-items: center; gap: 16px; order: 2; padding-bottom: 0; }
   .ac-bar { flex: 1; }
   .ac-arrow { width: 46px; height: 46px; font-size: 16px; }
-  .ac-slide { flex-direction: column; gap: 18px; align-items: stretch; }
-  .ac-img { flex: none; width: 100%; max-width: none; }
 }
