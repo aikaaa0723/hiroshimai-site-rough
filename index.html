@@ -55,29 +55,25 @@
         <a href="about/index.html" class="more">もっと見る</a>
       </div>
       <div class="about-carousel" data-reveal>
-        <div class="ac-controls">
-          <div class="ac-arrows">
-            <button class="ac-arrow" id="acPrev" type="button" aria-label="前へ">←</button>
-            <button class="ac-arrow" id="acNext" type="button" aria-label="次へ">→</button>
-          </div>
-          <div class="ac-bar" aria-hidden="true"><span class="ac-bar-fill" id="acBar"></span></div>
-          <div class="ac-num"><span id="acNum">01</span> / 03</div>
+        <div class="ac-stage" id="acStage">
+          <div class="ac-slide"><img src="assets/img-abstract.png" alt="" /></div>
+          <div class="ac-slide"><img src="assets/img-meeting.png" alt="" /></div>
+          <div class="ac-slide"><img src="assets/img-laptop.png" alt="" /></div>
         </div>
-        <div class="ac-viewport">
-          <div class="ac-track" id="acTrack">
-            <article class="ac-slide">
-              <a class="ac-img" href="about/index.html"><img src="assets/img-abstract.png" alt="" /></a>
-              <div class="ac-cap"><p class="ac-cat">企業理念</p><h3>Purpose・Mission・Vision</h3><p class="ac-desc">人が、人にしかできない創造的な仕事に没頭できる社会へ。AIは目的ではなく実装の手段です。すべての判断を、人の創造性を取り戻す一点に接続します。</p></div>
-            </article>
-            <article class="ac-slide">
-              <a class="ac-img" href="about/index.html"><img src="assets/img-meeting.png" alt="" /></a>
-              <div class="ac-cap"><p class="ac-cat">価値観と行動指針</p><h3>素直・感謝・自責 ／ 勝ち方の技術</h3><p class="ac-desc">成果以前の人格を土台に、スピードと量で学び、クオリティで磨き、創造と誠実で顧客価値へ変えます。</p></div>
-            </article>
-            <article class="ac-slide">
-              <a class="ac-img" href="about/index.html"><img src="assets/img-laptop.png" alt="" /></a>
-              <div class="ac-cap"><p class="ac-cat">代表メッセージ・会社概要</p><h3>成果が出るまで、伴走する。</h3><p class="ac-desc">「AIを使いたい」で終わらせない。代表 住田の想いと、会社概要・略歴をご紹介します。</p></div>
-            </article>
+        <div class="ac-bottom">
+          <div class="ac-controls">
+            <div class="ac-arrows">
+              <button class="ac-arrow" id="acPrev" type="button" aria-label="前へ">←</button>
+              <button class="ac-arrow" id="acNext" type="button" aria-label="次へ">→</button>
+            </div>
+            <div class="ac-bar" aria-hidden="true"><span class="ac-bar-fill" id="acBar"></span></div>
+            <div class="ac-num"><span id="acNum">01</span> / 03</div>
           </div>
+          <a class="ac-cap" id="acCapLink" href="about/index.html">
+            <p class="ac-cat" id="acCat">企業理念</p>
+            <h3 id="acTitle">Purpose・Mission・Vision</h3>
+            <p class="ac-desc" id="acDesc">人が、人にしかできない創造的な仕事に没頭できる社会へ。AIは目的ではなく実装の手段です。</p>
+          </a>
         </div>
       </div>
     </section>
@@ -217,31 +213,43 @@
         else { for (var k3 = 0; k3 < tiles.length; k3++) { tiles[k3]._x = W * (0.2 + k3 * 0.12); tiles[k3].style.transform = "translate3d(" + tiles[k3]._x + "px," + tiles[k3]._y + "px,0)"; tiles[k3].style.opacity = "0.5"; } }
       })();
 
-      /* ===== About カルーセル（左の矢印で右の画像＋説明をスワイプ） ===== */
+      /* ===== About カバーフロー（中央＝ピント／前後＝ぼかして左右に） ===== */
       (function () {
-        var track = document.getElementById("acTrack");
-        if (!track) return;
-        var total = track.children.length;
+        var stage = document.getElementById("acStage");
+        if (!stage) return;
+        var slides = Array.prototype.slice.call(stage.querySelectorAll(".ac-slide"));
+        var N = slides.length;
+        var DATA = [
+          { cat: "企業理念", title: "Purpose・Mission・Vision", desc: "人が、人にしかできない創造的な仕事に没頭できる社会へ。AIは目的ではなく実装の手段です。" },
+          { cat: "価値観と行動指針", title: "素直・感謝・自責 ／ 勝ち方の技術", desc: "成果以前の人格を土台に、スピードと量で学び、クオリティで磨き、創造と誠実で顧客価値へ変えます。" },
+          { cat: "代表メッセージ・会社概要", title: "成果が出るまで、伴走する。", desc: "「AIを使いたい」で終わらせない。代表 住田の想いと、会社概要・略歴をご紹介します。" }
+        ];
         var idx = 0;
-        var bar = document.getElementById("acBar");
-        var num = document.getElementById("acNum");
+        var bar = document.getElementById("acBar"), num = document.getElementById("acNum");
+        var elCat = document.getElementById("acCat"), elTitle = document.getElementById("acTitle"), elDesc = document.getElementById("acDesc");
         function render() {
-          track.style.transform = "translateX(" + (-idx * 100) + "%)";
-          if (bar) bar.style.width = ((idx + 1) / total * 100).toFixed(2) + "%";
+          var step = slides[0].getBoundingClientRect().width * 0.74;
+          slides.forEach(function (s, i) {
+            var rel = i - idx;
+            if (rel > N / 2) rel -= N;
+            if (rel < -N / 2) rel += N;
+            var active = rel === 0;
+            s.style.transform = "translateX(calc(-50% + " + (rel * step).toFixed(1) + "px)) scale(" + (active ? 1 : 0.82) + ")";
+            s.style.zIndex = active ? 3 : (2 - Math.abs(rel));
+            s.classList.toggle("is-active", active);
+          });
+          if (bar) bar.style.width = ((idx + 1) / N * 100).toFixed(2) + "%";
           if (num) num.textContent = ("0" + (idx + 1)).slice(-2);
+          var d = DATA[idx] || {};
+          if (elCat) elCat.textContent = d.cat || "";
+          if (elTitle) elTitle.textContent = d.title || "";
+          if (elDesc) elDesc.textContent = d.desc || "";
         }
-        function go(n) { idx = (n % total + total) % total; render(); }
+        function go(n) { idx = (n % N + N) % N; render(); }
         document.getElementById("acPrev").addEventListener("click", function () { go(idx - 1); });
         document.getElementById("acNext").addEventListener("click", function () { go(idx + 1); });
-        /* タッチ/ドラッグでスワイプ */
-        var x0 = null;
-        track.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-        track.addEventListener("touchend", function (e) {
-          if (x0 == null) return;
-          var dx = e.changedTouches[0].clientX - x0;
-          if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
-          x0 = null;
-        }, { passive: true });
+        slides.forEach(function (s, i) { s.addEventListener("click", function () { if (i !== idx) go(i); }); });
+        window.addEventListener("resize", render);
         render();
       })();
     </script>

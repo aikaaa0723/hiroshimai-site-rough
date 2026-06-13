@@ -878,37 +878,39 @@ body { line-height: 1.9; }
   .about-3d .s-card .s-thumb, .about-3d .s-card .s-cat, .about-3d .s-card h3, .about-3d .s-card p { transform: none; } }
 
 /* ============================================================
-   ABOUT CAROUSEL（左に矢印＋進捗/番号、右に画像＋説明がスワイプ＝Sony風）
+   ABOUT カバーフロー（中央＝ピント／前後＝強めのぼかしで左右に覗く）
    ============================================================ */
-/* Sonyヒーロー配置：大画像が右上／左下に矢印＋進捗＋番号／画像の下に見出し＋説明 */
-.about-carousel { display: grid; grid-template-columns: 148px 1fr; gap: 44px; align-items: end; max-width: var(--maxw); margin: 0 auto; }
-.ac-controls { display: flex; flex-direction: column; gap: 20px; padding-bottom: 8px; }
+.about-carousel { max-width: var(--maxw); margin: 0 auto; }
+.ac-stage { position: relative; --ac-w: clamp(320px, 44vw, 580px); height: calc(var(--ac-w) * 9 / 16); overflow: hidden; }
+.ac-slide { position: absolute; top: 0; left: 50%; width: var(--ac-w); aspect-ratio: 16 / 9;
+  border-radius: 8px; overflow: hidden; background: var(--bg-alt); cursor: pointer;
+  transform: translateX(-50%) scale(.82); filter: blur(12px); opacity: .5;
+  transition: transform .75s cubic-bezier(.4,0,.2,1), filter .75s ease, opacity .75s ease;
+  will-change: transform, filter, opacity; }
+.ac-slide img { width: 100%; height: 100%; object-fit: cover; }
+.ac-slide.is-active { filter: blur(0); opacity: 1; cursor: default; box-shadow: 0 28px 64px rgba(20,30,60,.22); }
+
+.ac-bottom { display: flex; align-items: flex-start; justify-content: center; gap: 44px; max-width: 880px; margin: 40px auto 0; }
+.ac-controls { display: flex; flex-direction: column; gap: 18px; flex: none; }
 .ac-arrows { display: flex; gap: 14px; }
 .ac-arrow { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.55);
   color: var(--ink-strong); font-family: var(--font-en); font-size: 18px; line-height: 1; cursor: pointer;
   display: flex; align-items: center; justify-content: center; transition: border-color .25s, color .25s, background .25s, transform .25s; }
 .ac-arrow:hover { border-color: var(--magenta); color: var(--magenta); transform: translateY(-2px); }
-.ac-bar { width: 100%; height: 2px; background: var(--line); position: relative; overflow: hidden; }
+.ac-bar { width: 128px; height: 2px; background: var(--line); position: relative; overflow: hidden; }
 .ac-bar-fill { position: absolute; left: 0; top: 0; height: 100%; width: 33.333%; background: var(--ink-strong); transition: width .6s cubic-bezier(.4,0,.2,1); }
 .ac-num { font-family: var(--font-en); font-size: 14px; letter-spacing: .08em; color: var(--ink-soft); }
 .ac-num span { color: var(--ink-strong); font-weight: 600; }
 
-.ac-viewport { overflow: hidden; }
-.ac-track { display: flex; transition: transform .7s cubic-bezier(.4,0,.2,1); will-change: transform; }
-/* 1スライド＝大きな画像（上）＋見出し・説明（下） */
-.ac-slide { flex: 0 0 100%; min-width: 0; display: block; }
-.ac-img { display: block; width: 66.67%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--bg-alt); box-shadow: 0 24px 56px rgba(20,30,60,.16); }
-.ac-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
-.ac-img:hover img { transform: scale(1.03); }
-.ac-cap { margin-top: 22px; }
+.ac-cap { display: block; flex: 1; min-width: 0; max-width: 560px; color: inherit; }
 .ac-cat { font-family: var(--font-en); font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--ink-soft); }
 .ac-cap h3 { font-size: clamp(19px, 2.2vw, 26px); font-weight: 700; margin-top: 8px; color: var(--ink-strong); line-height: 1.45; }
-.ac-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.95; max-width: 760px; }
+.ac-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.95; }
 
 @media (max-width: 760px) {
-  .about-carousel { grid-template-columns: 1fr; gap: 22px; align-items: stretch; }
-  .ac-controls { flex-direction: row; align-items: center; gap: 16px; order: 2; padding-bottom: 0; }
-  .ac-bar { flex: 1; }
+  .ac-stage { --ac-w: 76vw; }
+  .ac-bottom { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+  .ac-controls { flex-direction: row; align-items: center; gap: 16px; }
   .ac-arrow { width: 46px; height: 46px; font-size: 16px; }
-  .ac-img { width: 100%; }
+  .ac-cap { text-align: center; }
 }
