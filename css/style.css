@@ -1057,7 +1057,7 @@ main:focus { outline: none; }
   transition: opacity .8s ease, visibility .8s ease;
 }
 .intro.done { opacity: 0; visibility: hidden; }
-.intro-text { color: #fff; font-family: var(--font); font-weight: 500;
+.intro-text { color: #fff; font-family: var(--font); font-weight: 300;
   font-size: clamp(26px, 5.2vw, 58px); line-height: 1.55; letter-spacing: .05em; }
 .intro-caret { display: inline-block; width: .055em; height: 1.05em; margin-left: .06em;
   background: var(--magenta); vertical-align: -0.13em; animation: introBlink 1s steps(1, end) infinite; }
