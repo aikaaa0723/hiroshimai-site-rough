@@ -1046,3 +1046,20 @@ main:focus { outline: none; }
 .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .to-top:hover { border-color: var(--magenta); color: var(--magenta); }
 @media (max-width: 560px) { .to-top { right: 16px; bottom: 16px; width: 42px; height: 42px; } }
+/* ============================================================
+   イントロ（打ち込み/タイプライター）— Sony風の起動演出
+   ============================================================ */
+.intro-lock { overflow: hidden; }
+.intro {
+  position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center;
+  padding: 24px; text-align: center;
+  background: linear-gradient(120deg, #0c1538 0%, #1c1142 50%, #2e0f28 100%);
+  transition: opacity .8s ease, visibility .8s ease;
+}
+.intro.done { opacity: 0; visibility: hidden; }
+.intro-text { color: #fff; font-family: var(--font); font-weight: 500;
+  font-size: clamp(26px, 5.2vw, 58px); line-height: 1.55; letter-spacing: .05em; }
+.intro-caret { display: inline-block; width: .055em; height: 1.05em; margin-left: .06em;
+  background: var(--magenta); vertical-align: -0.13em; animation: introBlink 1s steps(1, end) infinite; }
+@keyframes introBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .intro-caret { animation: none; } }

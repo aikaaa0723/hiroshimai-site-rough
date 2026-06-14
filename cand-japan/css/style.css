@@ -1056,3 +1056,20 @@ main:focus { outline: none; }
 .hero-copy h1 { filter: drop-shadow(0 1px 1px rgba(6,8,22,.8)) drop-shadow(0 0 5px rgba(6,8,22,.55)); }
 .hero-copy .hero-lead { filter: drop-shadow(0 1px 1px rgba(6,8,22,.75)) drop-shadow(0 0 4px rgba(6,8,22,.5)); }
 .hero .scroll-hint { filter: drop-shadow(0 1px 2px rgba(6,8,22,.65)); }
+/* ============================================================
+   イントロ（打ち込み/タイプライター）— Sony風の起動演出
+   ============================================================ */
+.intro-lock { overflow: hidden; }
+.intro {
+  position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center;
+  padding: 24px; text-align: center;
+  background: linear-gradient(120deg, #0c1538 0%, #1c1142 50%, #2e0f28 100%);
+  transition: opacity .8s ease, visibility .8s ease;
+}
+.intro.done { opacity: 0; visibility: hidden; }
+.intro-text { color: #fff; font-family: var(--font); font-weight: 500;
+  font-size: clamp(26px, 5.2vw, 58px); line-height: 1.55; letter-spacing: .05em; }
+.intro-caret { display: inline-block; width: .055em; height: 1.05em; margin-left: .06em;
+  background: var(--magenta); vertical-align: -0.13em; animation: introBlink 1s steps(1, end) infinite; }
+@keyframes introBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .intro-caret { animation: none; } }
