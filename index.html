@@ -158,7 +158,6 @@
         var cur = -1, ticking = false;
         function update() {
           ticking = false;
-          if (window.innerWidth <= 760) { if (cur !== -1) { cur = -1; } return; }
           var vh = window.innerHeight;
           var top = section.getBoundingClientRect().top;       /* 区間先頭の位置 */
           var total = section.offsetHeight - vh;               /* 区間内のスクロール距離 */
