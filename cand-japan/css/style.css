@@ -1047,3 +1047,12 @@ main:focus { outline: none; }
 .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .to-top:hover { border-color: var(--magenta); color: var(--magenta); }
 @media (max-width: 560px) { .to-top { right: 16px; bottom: 16px; width: 42px; height: 42px; } }
+
+/* ============================================================
+   [cand-japan] ヒーロー：スクリムを消し、文字は縁取り（ドロップシャドウ）で可読に
+   明るい japan 動画に文字を直接のせる。grad-text にも効くよう filter:drop-shadow を使用。
+   ============================================================ */
+.hero-scrim { display: none; }
+.hero-copy h1 { filter: drop-shadow(0 1px 1px rgba(6,8,22,.8)) drop-shadow(0 0 5px rgba(6,8,22,.55)); }
+.hero-copy .hero-lead { filter: drop-shadow(0 1px 1px rgba(6,8,22,.75)) drop-shadow(0 0 4px rgba(6,8,22,.5)); }
+.hero .scroll-hint { filter: drop-shadow(0 1px 2px rgba(6,8,22,.65)); }
