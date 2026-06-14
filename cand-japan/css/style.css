@@ -1132,3 +1132,16 @@ main:focus { outline: none; }
 .hero-copy h1 .grad-text { font-weight: 400; }
 .s-head h2, .section-head h2, .block-head h2 { font-weight: 600; }
 .mf-statement strong { font-weight: 500; }
+/* ============================================================
+   [モバイル] ミッション：流れる画像を文字の「下」に（かぶり解消）
+   PC=画像が背面に重なる演出 / スマホ=縦積み（文字→画像帯）
+   ============================================================ */
+@media (max-width: 720px) {
+  .mission-feature { flex-direction: column; align-items: stretch; justify-content: flex-start; min-height: 0; }
+  .mf-text { order: 0; position: relative; z-index: 2; max-width: none; }
+  .mflow {
+    position: relative; inset: auto; order: 1;
+    width: 100%; height: 260px; margin-top: 30px;
+    opacity: 1; overflow: hidden;
+  }
+}
