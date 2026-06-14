@@ -55,7 +55,6 @@
           LOGO_DARK +
         '</a>' +
         '<nav class="global-nav" aria-label="グローバルナビゲーション"><ul>' + NAV + '</ul></nav>' +
-        '<span class="lang-toggle" aria-label="言語切り替え"><a class="on" aria-current="true">JP</a><span class="sep">|</span><a>EN</a></span>' +
         '<a href="' + ROOT + 'contact.html" class="btn-head">お問い合わせ</a>' +
         '<button class="nav-burger" id="navBurger" type="button" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>' +
       '</div>' +
@@ -174,5 +173,32 @@
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(applyParallax); } }, { passive: true });
     window.addEventListener("resize", applyParallax);
     applyParallax();
+  }
+
+  /* ===== Skip link（本文へスキップ） ===== */
+  var skip = document.createElement("a");
+  skip.className = "skip-link"; skip.href = "#"; skip.textContent = "本文へスキップ";
+  skip.addEventListener("click", function (e) { e.preventDefault(); var m = document.querySelector("main"); if (m) { m.setAttribute("tabindex", "-1"); m.focus(); m.scrollIntoView(); } });
+  document.body.insertBefore(skip, document.body.firstChild);
+
+  /* ===== ページトップへ戻る ===== */
+  var toTop = document.createElement("button");
+  toTop.className = "to-top"; toTop.type = "button"; toTop.setAttribute("aria-label", "ページトップへ戻る");
+  toTop.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 6l-7 7h4v5h6v-5h4z" fill="currentColor"/></svg>';
+  toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  document.body.appendChild(toTop);
+  window.addEventListener("scroll", function () { toTop.classList.toggle("show", window.pageYOffset > 600); }, { passive: true });
+
+  /* ===== ヒーロー動画の再生/一時停止（Sony風） ===== */
+  var hv = document.querySelector(".hero-video");
+  var heroSec = document.querySelector(".hero");
+  if (hv && heroSec) {
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="6" y="5" width="4" height="14" fill="currentColor"/><rect x="14" y="5" width="4" height="14" fill="currentColor"/></svg>';
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+    var tg = document.createElement("button"); tg.className = "hero-toggle"; tg.type = "button";
+    function syncTg() { var p = hv.paused; tg.innerHTML = p ? ICON_PLAY : ICON_PAUSE; tg.setAttribute("aria-label", p ? "動画を再生" : "動画を一時停止"); }
+    tg.addEventListener("click", function () { if (hv.paused) hv.play(); else hv.pause(); syncTg(); });
+    hv.addEventListener("play", syncTg); hv.addEventListener("pause", syncTg);
+    heroSec.appendChild(tg); syncTg();
   }
 })();

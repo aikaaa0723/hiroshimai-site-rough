@@ -1039,3 +1039,23 @@ body { line-height: 1.9; }
 @media (max-width: 560px) {
   .prism-wrap { gap: 8px; }   /* 矢印との間隔を詰め、四角柱を少し大きく */
 }
+/* ============================================================
+   操作性・アクセシビリティの底上げ（Sony水準へ）
+   ヒーロー再生/停止(.hero-toggle)は既存。ここでは focus-visible / skip / to-top。
+   ============================================================ */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--magenta); outline-offset: 3px; border-radius: 3px;
+}
+main:focus { outline: none; }
+.skip-link { position: fixed; left: 16px; top: -64px; z-index: 1000; background: #0e0f12; color: #fff;
+  padding: 10px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  transition: top .2s ease; }
+.skip-link:focus { top: 14px; outline: 2px solid #fff; outline-offset: 2px; }
+.to-top { position: fixed; right: 22px; bottom: 22px; z-index: 60; width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid var(--line); background: rgba(255,255,255,.92); color: var(--ink-strong); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(20,30,60,.18);
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .3s, transform .3s, visibility .3s, border-color .2s, color .2s; }
+.to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { border-color: var(--magenta); color: var(--magenta); }
+@media (max-width: 560px) { .to-top { right: 16px; bottom: 16px; width: 42px; height: 42px; } }

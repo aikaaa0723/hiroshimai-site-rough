@@ -52,9 +52,9 @@
       </div>
       <div class="about-carousel" data-reveal>
         <div class="ac-stage" id="acStage">
-          <div class="ac-slide"><img src="assets/img-abstract.png" alt="" /></div>
-          <div class="ac-slide"><img src="assets/img-meeting.png" alt="" /></div>
-          <div class="ac-slide"><img src="assets/img-laptop.png" alt="" /></div>
+          <div class="ac-slide"><img loading="lazy" src="assets/img-abstract.webp" alt="" /></div>
+          <div class="ac-slide"><img loading="lazy" src="assets/img-meeting.webp" alt="" /></div>
+          <div class="ac-slide"><img loading="lazy" src="assets/img-laptop.webp" alt="" /></div>
         </div>
         <div class="ac-bottom">
           <div class="ac-controls">
@@ -84,19 +84,19 @@
 
         <div class="sc-slides">
           <article class="sc-slide is-active">
-            <a class="sc-img" href="services/index.html#training"><img src="assets/img-meeting.png" alt="" /></a>
+            <a class="sc-img" href="services/index.html#training"><img loading="lazy" src="assets/img-meeting.webp" alt="" /></a>
             <div class="sc-text"><p class="sc-num">01</p><h3>AI研修</h3><p class="sc-desc">基礎→実践→自動化の3STEPで「触れる」から「業務に組み込める」へ。補助金活用で実質5万円。</p><div class="sc-tags">#基礎 #実践 #自動化</div></div>
           </article>
           <article class="sc-slide">
-            <a class="sc-img" href="services/index.html#advisory"><img src="assets/img-laptop.png" alt="" /></a>
+            <a class="sc-img" href="services/index.html#advisory"><img loading="lazy" src="assets/img-laptop.webp" alt="" /></a>
             <div class="sc-text"><p class="sc-num">02</p><h3>AI顧問</h3><p class="sc-desc">外部CTO・AI顧問として、戦略策定から実装まで経営に伴走。チャット相談し放題、選べる4プラン。</p><div class="sc-tags">#戦略 #エージェント #4プラン</div></div>
           </article>
           <article class="sc-slide">
-            <a class="sc-img" href="services/index.html#dev"><img src="assets/img-monitors.png" alt="" /></a>
+            <a class="sc-img" href="services/index.html#dev"><img loading="lazy" src="assets/img-monitors.webp" alt="" /></a>
             <div class="sc-text"><p class="sc-num">03</p><h3>AIシステム開発</h3><p class="sc-desc">「作って終わり」ではなく、業務に根付くシステムを要件定義から運用までフルオーダーで。</p><div class="sc-tags">#カスタムAI #業務自動化 #内製化</div></div>
           </article>
           <article class="sc-slide">
-            <a class="sc-img" href="services/index.html#iot"><img src="assets/img-abstract.png" alt="" /></a>
+            <a class="sc-img" href="services/index.html#iot"><img loading="lazy" src="assets/img-abstract.webp" alt="" /></a>
             <div class="sc-text"><p class="sc-num">04</p><h3>IoT開発</h3><p class="sc-desc">現場の「見えない課題」を、センサー×AIで見える化。製造・物流・農業など、あらゆる現場のDXを実装レベルで。</p><div class="sc-tags">#製造 #物流 #農業</div></div>
           </article>
         </div>
@@ -179,7 +179,7 @@
       (function () {
         var host = document.getElementById("mflow");
         if (!host) return;
-        var IMGS = ["assets/img-meeting.png", "assets/img-laptop.png", "assets/img-monitors.png", "assets/img-abstract.png"];
+        var IMGS = ["assets/img-meeting.webp", "assets/img-laptop.webp", "assets/img-monitors.webp", "assets/img-abstract.webp"];
         var FOCUS = 0.66;   /* 不透過になる横位置（画面幅比 ≒ 6.6:3.4） */
         var FALLOFF = 0.34; /* これだけ離れると透過0（画面幅比） */
         var SPEED = 0.052;  /* px/ms ≒ 52px/s */
@@ -291,6 +291,9 @@
         document.getElementById("acPrev").addEventListener("click", function () { go(idx - 1, -1); });
         document.getElementById("acNext").addEventListener("click", function () { go(idx + 1, 1); });
         slides.forEach(function (s, i) { s.addEventListener("click", function () { if (i !== idx) go(i, i > idx ? 1 : -1); }); });
+        var _acTsx = null;
+        stage.addEventListener("touchstart", function (e) { _acTsx = e.touches[0].clientX; }, { passive: true });
+        stage.addEventListener("touchend", function (e) { if (_acTsx === null) return; var dx = e.changedTouches[0].clientX - _acTsx; if (Math.abs(dx) > 40) { if (dx < 0) go(idx + 1, 1); else go(idx - 1, -1); } _acTsx = null; }, { passive: true });
         window.addEventListener("resize", function () { render(); });
         render();
       })();
@@ -308,19 +311,19 @@
         <div class="prism-stage">
           <div class="prism">
             <a class="prism-face" href="cases/index.html" data-i="0">
-              <img src="assets/img-monitors.png" alt="" />
+              <img loading="lazy" src="assets/img-monitors.webp" alt="" />
               <span class="pf-cap"><b class="pf-num">CASE 01</b><b class="pf-title">AI研修 ・ 業務自動化</b><span class="pf-sub">導入事例は準備中です。順次掲載します。</span></span>
             </a>
             <a class="prism-face" href="cases/index.html" data-i="1">
-              <img src="assets/img-laptop.png" alt="" />
+              <img loading="lazy" src="assets/img-laptop.webp" alt="" />
               <span class="pf-cap"><b class="pf-num">CASE 02</b><b class="pf-title">AI顧問</b><span class="pf-sub">成果指標とともにご紹介予定です。</span></span>
             </a>
             <a class="prism-face" href="cases/index.html" data-i="2">
-              <img src="assets/img-meeting.png" alt="" />
+              <img loading="lazy" src="assets/img-meeting.webp" alt="" />
               <span class="pf-cap"><b class="pf-num">CASE 03</b><b class="pf-title">受託開発 ・ IoT</b><span class="pf-sub">現場での実装・定着の様子を掲載予定。</span></span>
             </a>
             <a class="prism-face" href="cases/index.html" data-i="3">
-              <img src="assets/img-abstract.png" alt="" />
+              <img loading="lazy" src="assets/img-abstract.webp" alt="" />
               <span class="pf-cap"><b class="pf-num">CASE 04</b><b class="pf-title">製造・物流・農業</b><span class="pf-sub">IoT×AIで現場のデータを見える化。</span></span>
             </a>
           </div>
@@ -339,19 +342,19 @@
       </div>
       <div class="media-list">
         <a class="media-item" href="media/index.html" data-reveal>
-          <div class="mi-img"><img src="assets/img-abstract.png" alt="" loading="lazy" /></div>
+          <div class="mi-img"><img src="assets/img-abstract.webp" alt="" loading="lazy" /></div>
           <div class="mi-text"><p class="mi-date">2026.06.10 ・ コラム</p><h3>「AIを使う」で終わらせないために ― 実装と定着の話</h3></div>
         </a>
         <a class="media-item" href="media/index.html" data-reveal>
-          <div class="mi-img"><img src="assets/img-monitors.png" alt="" loading="lazy" /></div>
+          <div class="mi-img"><img src="assets/img-monitors.webp" alt="" loading="lazy" /></div>
           <div class="mi-text"><p class="mi-date">2026.06.06 ・ 活用ノウハウ</p><h3>議事録・メール・資料作成をAIで自動化する基本</h3></div>
         </a>
         <a class="media-item" href="media/index.html" data-reveal>
-          <div class="mi-img"><img src="assets/img-laptop.png" alt="" loading="lazy" /></div>
+          <div class="mi-img"><img src="assets/img-laptop.webp" alt="" loading="lazy" /></div>
           <div class="mi-text"><p class="mi-date">2026.06.03 ・ 補助金</p><h3>人材開発支援助成金で研修を「実質5万円」にする方法</h3></div>
         </a>
         <a class="media-item" href="media/index.html" data-reveal>
-          <div class="mi-img"><img src="assets/img-meeting.png" alt="" loading="lazy" /></div>
+          <div class="mi-img"><img src="assets/img-meeting.webp" alt="" loading="lazy" /></div>
           <div class="mi-text"><p class="mi-date">2026.06.01 ・ エージェント</p><h3>ノーコードで業務エージェントを作る最初の一歩</h3></div>
         </a>
       </div>
