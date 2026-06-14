@@ -1063,3 +1063,62 @@ main:focus { outline: none; }
   background: var(--magenta); vertical-align: -0.13em; animation: introBlink 1s steps(1, end) infinite; }
 @keyframes introBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .intro-caret { animation: none; } }
+/* ============================================================
+   デザインシステム統一（大手感＝抑制・一貫性）
+   ・角丸 / 影 / ホバー を1規格に
+   ・グラデ文字 → 単色（ブランドの差し色＝マゼンタ）
+   ・ヒーロー見出しを細く
+   ※末尾に置き、各所のばらつきを上書き
+   ============================================================ */
+:root {
+  --radius: 8px;
+  --shadow: 0 12px 30px rgba(20,30,60,.10);
+  --shadow-hi: 0 18px 42px rgba(20,30,60,.14);
+  --lift: -4px;
+  --img-zoom: 1.045;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* --- 角丸を1規格に（円形ボタンは除く） --- */
+.s-thumb, .sc-img, .ac-slide, .mi-img, .prism-face, .mflow .mtile,
+.service-card, .plan-card, .case-card, .article-card, .role-card, .philo-card, .values-box,
+.step-card, .flow-item, .price-box, .price-cell, .teaser-chip, .placeholder-note,
+.hero-slider, .btn-primary, .btn-ghost, .more-link, .btn-head,
+.form-row input, .form-row textarea, .form-row select, .form-submit, .cta .btn-cta {
+  border-radius: var(--radius);
+}
+
+/* --- 影を1規格に（平常=フラット、強調のみ共通の影） --- */
+.service-card, .article-card, .case-card, .role-card, .plan-card, .philo-card, .values-box,
+.step-card, .teaser-chip, .s-card, .s-thumb, .mi-img { box-shadow: none; }
+.ac-slide.is-active { box-shadow: var(--shadow-hi); }
+.mflow .mtile { box-shadow: var(--shadow); }
+.btn-primary, .form-submit, .cta .btn-cta { box-shadow: var(--shadow); }
+
+/* --- ホバーを1規格に（カード=持ち上げ＋共通の影／画像=ズーム） --- */
+.service-card, .article-card, .case-card, .role-card, .philo-card, .values-box, .teaser-chip, .s-card {
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .2s;
+}
+.service-card:hover, .article-card:hover, .case-card:hover, .role-card:hover,
+.philo-card:hover, .values-box:hover, .teaser-chip:hover {
+  transform: translateY(var(--lift)); box-shadow: var(--shadow-hi); border-color: var(--line);
+}
+.s-card:hover .s-thumb img, .media-item:hover .mi-img img,
+.article-card:hover .article-thumb img, .case-card:hover .case-thumb img {
+  transform: scale(var(--img-zoom));
+}
+.btn-primary:hover, .form-submit:hover, .cta .btn-cta:hover {
+  transform: translateY(-2px); box-shadow: var(--shadow-hi);
+}
+
+/* --- グラデ文字 → 単色（マゼンタ）。レインボー＝startup感をやめる --- */
+.grad-text, .mf-statement strong, .impl-rule b, .price-box .lead strong, .message-block .rep-lead b {
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  -webkit-text-fill-color: var(--magenta); color: var(--magenta);
+}
+
+/* --- 見出しを細く（抑制＝大手感） --- */
+.hero-copy h1 { font-weight: 300; letter-spacing: .015em; }
+.hero-copy h1 .grad-text { font-weight: 400; }
+.s-head h2, .section-head h2, .block-head h2 { font-weight: 600; }
+.mf-statement strong { font-weight: 500; }
