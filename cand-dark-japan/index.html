@@ -231,6 +231,7 @@
           t._x = x; t._y = rand(H * 0.10, Math.max(H * 0.10, H - t._h - H * 0.10));
           t.style.width = t._w + "px"; t.style.height = t._h + "px";
           t.querySelector("img").src = IMGS[(ii++) % IMGS.length];
+          t._t0 = null;   /* 挿入時刻（フェードイン用にリセット） */
         }
         var x0 = -rand(80, 240);
         for (var k2 = 0; k2 < tiles.length; k2++) { reset(tiles[k2], x0); x0 += tiles[k2]._w + rand(70, 200); }
@@ -250,12 +251,16 @@
               reset(t, minx - rand(70, 200));
             }
             var cx = t._x + t._w / 2;
-            /* 左端から focus(66%) までゆっくりフェードイン、focus から右端でフェードアウト */
+            /* 位置ベースのフェード（左端→focus66%→右端）＋smoothstep */
             var op = cx <= focusX ? (cx / focusX) : ((W - cx) / (W - focusX));
             op = op < 0 ? 0 : (op > 1 ? 1 : op);
-            op = op * op * (3 - 2 * op);   /* smoothstep で端を滑らかに（突然出現を解消） */
+            op = op * op * (3 - 2 * op);
+            /* 挿入フェードイン：初期表示・再利用どちらでも必ず 0 から立ち上げる */
+            if (t._t0 == null) t._t0 = ts;
+            var life = Math.min(1, (ts - t._t0) / 650);
+            life = life * life * (3 - 2 * life);
             t.style.transform = "translate3d(" + t._x.toFixed(1) + "px," + t._y.toFixed(1) + "px,0)";
-            t.style.opacity = op.toFixed(3);
+            t.style.opacity = (op * life).toFixed(3);
           }
           requestAnimationFrame(frame);
         }
