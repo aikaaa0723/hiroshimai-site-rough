@@ -1081,7 +1081,7 @@ main:focus { outline: none; }
    ※末尾に置き、各所のばらつきを上書き
    ============================================================ */
 :root {
-  --radius: 8px;
+  --radius: 0px;
   --shadow: 0 12px 30px rgba(20,30,60,.10);
   --shadow-hi: 0 18px 42px rgba(20,30,60,.14);
   --lift: -4px;

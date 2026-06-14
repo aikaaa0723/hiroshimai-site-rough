@@ -250,8 +250,10 @@
               reset(t, minx - rand(70, 200));
             }
             var cx = t._x + t._w / 2;
-            var op = 1 - Math.abs(cx - focusX) / falloff;
+            /* 左端から focus(66%) までゆっくりフェードイン、focus から右端でフェードアウト */
+            var op = cx <= focusX ? (cx / focusX) : ((W - cx) / (W - focusX));
             op = op < 0 ? 0 : (op > 1 ? 1 : op);
+            op = op * op * (3 - 2 * op);   /* smoothstep で端を滑らかに（突然出現を解消） */
             t.style.transform = "translate3d(" + t._x.toFixed(1) + "px," + t._y.toFixed(1) + "px,0)";
             t.style.opacity = op.toFixed(3);
           }
