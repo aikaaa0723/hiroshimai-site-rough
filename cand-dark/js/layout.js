@@ -85,7 +85,7 @@
         '</nav>' +
       '</div>' +
       '<div class="footer-bottom">' +
-        '<ul class="footer-legal"><li><a href="#">利用規約</a></li><li><a href="#">プライバシーポリシー</a></li><li><a href="#">サイトマップ</a></li></ul>' +
+        '<ul class="footer-legal"><li><a href="' + ROOT + 'terms.html">利用規約</a></li><li><a href="' + ROOT + 'privacy.html">プライバシーポリシー</a></li><li><a href="' + ROOT + 'sitemap.html">サイトマップ</a></li></ul>' +
         '<p class="copyright">© 2026 HiroshimAI Inc.</p>' +
       '</div>' +
       '<p class="footer-note" style="max-width:var(--maxw);margin:14px auto 0;">本サイトは企画書 v0.1 に基づく制作中の案です。実績・正式表記など一部は確認中の項目を含みます。</p>' +
