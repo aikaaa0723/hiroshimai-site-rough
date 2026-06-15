@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+# 候補バリエーション（本体の重複）はインデックス対象外
+Disallow: /cand-japan/
+Disallow: /cand-dark/
+Disallow: /cand-dark-japan/
+
+Sitemap: https://aikaaa0723.github.io/hiroshimai-site-rough/sitemap.xml
