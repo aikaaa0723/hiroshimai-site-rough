@@ -1263,3 +1263,14 @@ main:focus { outline: none; }
 @media (max-width: 560px) {
   .prism-stage { aspect-ratio: 3 / 2; }   /* 導入事例の柱を少し低く */
 }
+
+
+/* ============================================================
+   [モバイル] コラム(Media)：画像=左 / コメント=右 の横並びに
+   （既存の ≤480px 縦積みを後勝ちで上書き＝Sony Corporate Activities 風の横並びを維持）
+   ============================================================ */
+@media (max-width: 600px) {
+  .media-item { grid-template-columns: 0.82fr 1.18fr; gap: 16px; align-items: center; }
+  .mi-img { aspect-ratio: 4 / 3; }
+  .mi-date { margin-bottom: 8px; }
+}
