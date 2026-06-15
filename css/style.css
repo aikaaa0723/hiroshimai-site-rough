@@ -1210,3 +1210,14 @@ main:focus { outline: none; }
   .section, .mission-feature { padding-top: 150px; padding-bottom: 150px; }
   .page-section { padding-top: 110px; padding-bottom: 110px; }
 }
+
+/* ============================================================
+   [モバイル] セクション余白を Sony 相当へ引き締め（150→80px）
+   Sony のモバイルは「広く見えて実は効率的」な縦リズム。見出し周りも整える。
+   末尾追記＝上の拡大ブロックを後勝ちで上書き（PC は据置）
+   ============================================================ */
+@media (max-width: 720px) {
+  .section, .mission-feature { padding-top: 80px; padding-bottom: 80px; }
+  .page-section { padding-top: 64px; padding-bottom: 64px; }
+  .s-head, .section-head { margin-bottom: 36px; }
+}
