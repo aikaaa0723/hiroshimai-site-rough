@@ -1289,3 +1289,11 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   .rl-i { transform: none !important; transition: none; }
 }
+
+
+/* ============================================================
+   フッターのブランドを正規ロゴ画像に（暗背景用の白ワードマーク）
+   ============================================================ */
+.footer-brand .brand { gap: 0; }
+.footer-brand .brand-logo.footer-logo { height: 36px; width: auto; display: block; }
+@media (max-width: 560px) { .footer-brand .brand-logo.footer-logo { height: 32px; } }
