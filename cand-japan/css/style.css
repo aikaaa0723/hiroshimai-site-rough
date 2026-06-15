@@ -1234,3 +1234,32 @@ main:focus { outline: none; }
   .page-section { padding-top: 64px; padding-bottom: 64px; }
   .s-head, .section-head { margin-bottom: 36px; }
 }
+
+
+/* ============================================================
+   [モバイル] 文字・画像のスケールダウン（Sony 相当の控えめな大きさ）
+   見出し/ヒーロー/ステートメントを一段小さく、画像の高さも抑える
+   末尾追記＝既存のモバイル指定を後勝ちで上書き（PC は据置）
+   ============================================================ */
+@media (max-width: 720px) {
+  /* 文字 */
+  .hero-copy h1 { font-size: clamp(21px, 5.4vw, 28px); line-height: 1.42; }
+  .hero-copy .hero-lead { font-size: 13.5px; line-height: 1.85; }
+  .s-head h2, .section-head h2, .block-head h2 { font-size: 20px; line-height: 1.45; }
+  .mf-statement { font-size: 20px; line-height: 1.55; }
+  .mf-sub { font-size: 13.5px; }
+  .sc-text h3 { font-size: 20px; }
+  .sc-desc { font-size: 13.5px; }
+  .ac-cap h3 { font-size: 18px; }
+  .ac-desc { font-size: 13.5px; }
+  .nr-title { font-size: 16px; }
+  .mi-text h3 { font-size: 15px; }
+  .pf-title { font-size: 18px; }
+  /* 画像の高さを抑える */
+  .ac-stage { --ac-w: 70vw; }
+  .sc-img { aspect-ratio: 16 / 9; }
+  .mi-img { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 560px) {
+  .prism-stage { aspect-ratio: 3 / 2; }   /* 導入事例の柱を少し低く */
+}
