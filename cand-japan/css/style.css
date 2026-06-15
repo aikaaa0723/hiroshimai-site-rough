@@ -1209,3 +1209,16 @@ main:focus { outline: none; }
 @media (max-width: 760px) {
   .scrolly-sticky { height: 100svh; }
 }
+
+
+/* ============================================================
+   セクション縦余白の拡大（各セクションをより広々と＝上下の"間"を増やす）
+   左右パディングは維持し top/bottom のみ上書き（末尾追記で cascade 上書き）
+   ============================================================ */
+.section { padding-top: 280px; padding-bottom: 280px; }
+.mission-feature { padding-top: 280px; padding-bottom: 280px; }
+.page-section { padding-top: 190px; padding-bottom: 190px; }
+@media (max-width: 720px) {
+  .section, .mission-feature { padding-top: 150px; padding-bottom: 150px; }
+  .page-section { padding-top: 110px; padding-bottom: 110px; }
+}
