@@ -137,25 +137,39 @@
     });
   }
 
-  /* scroll reveal（Sony風：同じ親に並ぶ要素へ段階ディレイ＝stagger を付与） */
-  var items = document.querySelectorAll("[data-reveal]");
-  if (!("IntersectionObserver" in window) || !items.length) {
-    items.forEach(function (el) { el.classList.add("in"); });
-    return;
-  }
-  var counts = new Map();
-  items.forEach(function (el) {
-    var p = el.parentElement;
-    var n = counts.get(p) || 0;
-    counts.set(p, n + 1);
-    el.style.transitionDelay = Math.min(n * 75, 340) + "ms";
+  /* ===== 文字マスクリベール（Sony：見出し/ステートメントの行が overflow:hidden からせり上がる） ===== */
+  var maskEls = Array.prototype.slice.call(document.querySelectorAll(".s-head h2, .nr-head h2, .mf-statement"));
+  maskEls.forEach(function (el) {
+    var lines = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = lines.map(function (ln) { return '<span class="rl"><span class="rl-i">' + ln + "</span></span>"; }).join("");
+    el.querySelectorAll(".rl-i").forEach(function (inner, i) { inner.style.transitionDelay = Math.min(i * 0.12, 0.6) + "s"; });
+    el.classList.add("rl-mask");
   });
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+
+  /* ===== scroll reveal（Sony風：フェード＋スライドアップ。同じ親の兄弟へ stagger） ===== */
+  var fadeEls = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  var allEls = fadeEls.concat(maskEls);
+  if (!("IntersectionObserver" in window) || !allEls.length) {
+    fadeEls.forEach(function (el) { el.classList.add("in"); });
+    maskEls.forEach(function (el) { el.classList.add("rl-on"); });
+  } else {
+    var counts = new Map();
+    fadeEls.forEach(function (el) {
+      var p = el.parentElement;
+      var n = counts.get(p) || 0;
+      counts.set(p, n + 1);
+      el.style.transitionDelay = Math.min(n * 90, 450) + "ms";
     });
-  }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
-  items.forEach(function (el) { io.observe(el); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add(e.target.classList.contains("rl-mask") ? "rl-on" : "in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+    allEls.forEach(function (el) { io.observe(el); });
+  }
 
   /* image parallax（Sony風の控えめなスクロール視差：サムネ画像をゆっくり上下にずらす） */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
