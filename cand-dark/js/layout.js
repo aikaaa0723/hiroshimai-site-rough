@@ -60,7 +60,7 @@
       '</div>' +
     '</header>' +
     '<div class="mobile-drawer" id="mobileDrawer">' +
-      '<ul>' + NAV + '<li><a href="' + ROOT + 'contact.html">お問い合わせ</a></li></ul>' +
+      '<ul>' + NAV + '</ul>' +
       '<a href="' + ROOT + 'contact.html" class="btn-head">お問い合わせ</a>' +
     '</div>';
 
@@ -120,16 +120,20 @@
   var burger = document.getElementById("navBurger");
   var drawer = document.getElementById("mobileDrawer");
   if (burger && drawer) {
-    burger.addEventListener("click", function () {
-      var open = drawer.classList.toggle("open");
+    function setMenu(open) {
+      drawer.classList.toggle("open", open);
       burger.classList.toggle("open", open);
       burger.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+      /* 背後のスクロールをロック（全画面オーバーレイ中） */
+      document.documentElement.classList.toggle("nav-open", open);
+    }
+    burger.addEventListener("click", function () { setMenu(!drawer.classList.contains("open")); });
     drawer.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        drawer.classList.remove("open"); burger.classList.remove("open");
-        burger.setAttribute("aria-expanded", "false");
-      });
+      a.addEventListener("click", function () { setMenu(false); });
+    });
+    /* Esc でメニューを閉じる */
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && drawer.classList.contains("open")) setMenu(false);
     });
   }
 

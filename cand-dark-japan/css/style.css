@@ -1135,3 +1135,67 @@ main:focus { outline: none; }
     opacity: 1; overflow: hidden;
   }
 }
+
+
+/* ============================================================
+   [モバイル] Sony 仕上げ — 挙動の磨き込み
+   ・モバイルメニュー＝全画面オーバーレイ＋スクロールロック（中途半端なドロップを廃止）
+   ・タップ領域を 44px 以上に（バーガー/矢印/トップへ戻る）
+   ・四角柱の矢印を画像に重ねて柱を全幅に＋スワイプ対応（JS）
+   ・ヒーロー/ピン留めの高さを svh/dvh 化（URLバー伸縮のガタつき防止）
+   末尾追記＝既存ブロックは触らず cascade で上書き（revert容易）
+   ============================================================ */
+
+/* --- ヒーローの高さを small viewport 基準に（モバイルのURLバー伸縮で跳ねない） --- */
+@media (max-width: 720px) {
+  .hero { min-height: 84svh; }
+}
+
+/* --- モバイルメニュー：全画面オーバーレイ（Sony風） --- */
+@media (max-width: 860px) {
+  .mobile-drawer {
+    display: block;                       /* 常時DOMに置きopacity/visibilityで開閉アニメ */
+    top: var(--header-h);
+    height: calc(100dvh - var(--header-h));
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 8px 0 32px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity .3s ease, transform .4s cubic-bezier(.22,1,.36,1), visibility .3s;
+  }
+  .mobile-drawer.open { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+  .mobile-drawer ul { padding: 6px 24px 8px; }
+  .mobile-drawer li { border-bottom: 1px solid rgba(255,255,255,.12); }
+  .mobile-drawer a { display: block; padding: 19px 4px; font-size: 16px; font-weight: 500; }
+  .mobile-drawer .btn-head {
+    display: block; text-align: center; margin: 26px 24px 0;
+    padding: 16px; font-size: 15px; font-weight: 600;
+  }
+  /* メニュー展開中は背後をスクロールさせない */
+  html.nav-open, html.nav-open body { overflow: hidden; }
+  /* タップ領域：バーガーを 44px 角に */
+  .nav-burger { padding: 10px; }
+}
+
+/* --- タップ領域 44px 以上（矢印・トップへ戻る） --- */
+@media (max-width: 560px) {
+  .prism-nav { width: 44px; height: 44px; font-size: 19px; }
+  .to-top { right: 16px; bottom: 16px; width: 46px; height: 46px; }
+}
+
+/* --- 四角柱：矢印を画像に重ねて柱を全幅に（小画面で柱が痩せるのを解消） --- */
+@media (max-width: 560px) {
+  .prism-wrap { position: relative; gap: 0; }
+  .prism-stage { width: 100%; }
+  .prism-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+    background: rgba(255,255,255,.92); box-shadow: 0 4px 14px rgba(20,30,60,.18);
+  }
+  .prism-nav.prev { left: 6px; }
+  .prism-nav.next { right: 6px; }
+}
+
+/* --- ピン留めサービス節：高さを svh 化（URLバー伸縮で内容が跳ねない） --- */
+@media (max-width: 760px) {
+  .scrolly-sticky { height: 100svh; }
+}

@@ -166,9 +166,18 @@
           setDepth();
           go(0);
           window.addEventListener("resize", function () { setDepth(); render(); });
-          prism.addEventListener("click", function (e) { e.preventDefault(); go(idx + 1); });
+          var swiped = false;
+          prism.addEventListener("click", function (e) { e.preventDefault(); if (swiped) { swiped = false; return; } go(idx + 1); });
           if (prev) prev.addEventListener("click", function () { go(idx - 1); });
           if (next) next.addEventListener("click", function () { go(idx + 1); });
+          /* スワイプ対応（モバイル：左右フリックで前後の事例へ） */
+          var tsx = null;
+          stage.addEventListener("touchstart", function (e) { tsx = e.touches[0].clientX; }, { passive: true });
+          stage.addEventListener("touchend", function (e) {
+            if (tsx === null) return;
+            var dx = e.changedTouches[0].clientX - tsx; tsx = null;
+            if (Math.abs(dx) > 40) { swiped = true; go(dx < 0 ? idx + 1 : idx - 1); }
+          }, { passive: true });
           dots.forEach(function (d) { d.addEventListener("click", function () { go(parseInt(d.getAttribute("data-i"), 10)); }); });
         }
         function initAllPrisms() { Array.prototype.slice.call(document.querySelectorAll(".prism")).forEach(initPrism); }
