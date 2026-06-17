@@ -1449,12 +1449,38 @@ main:focus { outline: none; }
    ミッション：構成（大きな "Mission" 見出し＋写真コラージュ）は維持し、
    背景・文字色は従来の明るいトーンに戻す（base/テーマ変数に委ねる）。見出しはやや小さく。
    ============================================================ */
+/* ミッション見出しを他セクション(.s-head)と一致＝英字を小ラベル・和文「ミッション」を大見出しに、
+   ステートメント(内容)は見出しを超えないサイズに（＝見出し＞内容） */
 .mf-big {
-  font-family: var(--font-en); font-weight: 200; line-height: 1.0;
-  font-size: clamp(40px, 6.5vw, 92px); letter-spacing: .01em;
-  color: var(--ink-strong); margin: 0 0 6px;
+  font-family: var(--font-en); font-weight: 700; line-height: 1.2;
+  font-size: 12px; letter-spacing: .22em; color: var(--ink-soft);
+  margin: 0 0 8px;
 }
-.mf-kicker { margin-bottom: 36px; }
+.mf-kicker {
+  font-family: var(--font); font-weight: 700; color: var(--ink-strong);
+  font-size: clamp(20px, 3.2vw, 33px); letter-spacing: .01em; line-height: 1.4;
+  margin-bottom: 28px;
+}
+.mf-statement { font-size: clamp(16px, 2.2vw, 24px); line-height: 1.85; }
+
+/* ============================================================
+   「もっと見る」を各セクションの右下へ（ミッションは .mf-link のまま＝対象外）。
+   .section は relative 化、Service は .scrolly-sticky(sticky) が基準。
+   右端はコンテンツ幅(--maxw)の右辺に合わせる。
+   ============================================================ */
+.section { position: relative; }
+/* [data-reveal] の will-change:transform が .s-head を含みブロック化し、abs の .more が
+   見出し基準になってしまうのを解除（セクション基準にする）。s-head のリベールは opacity のみで影響なし */
+.s-head[data-reveal] { will-change: auto; }
+.s-head .more {
+  position: absolute; margin: 0; z-index: 4;
+  bottom: clamp(26px, 4vw, 56px);
+  right: max(22px, calc((100% - var(--maxw)) / 2));
+}
+/* モバイルは下余白が狭く abs の .more がコンテンツに重なるため、.more を含むセクションだけ下余白を確保 */
+@media (max-width: 720px) {
+  .section:has(.s-head .more) { padding-bottom: 120px; }
+}
 
 /* ============================================================
    [モバイル] About カバーフローの下部を Sony「新製品・サービス」風の配置に：
