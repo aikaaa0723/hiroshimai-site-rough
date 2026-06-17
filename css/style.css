@@ -1437,10 +1437,10 @@ main:focus { outline: none; }
    ============================================================ */
 .intro {
   background:
-    radial-gradient(58% 70% at 16% 18%, rgba(50,96,255,.95) 0%, transparent 60%),
-    radial-gradient(60% 70% at 86% 24%, rgba(158,42,248,.95) 0%, transparent 62%),
-    radial-gradient(74% 82% at 74% 92%, rgba(255,26,128,1) 0%, transparent 66%),
-    linear-gradient(125deg, #1f2cff 0%, #7d18e6 48%, #ff1f86 100%);
+    radial-gradient(58% 70% at 16% 18%, rgba(78,98,150,.5) 0%, transparent 60%),
+    radial-gradient(60% 70% at 86% 24%, rgba(116,92,150,.45) 0%, transparent 62%),
+    radial-gradient(74% 82% at 74% 92%, rgba(168,96,132,.45) 0%, transparent 66%),
+    linear-gradient(125deg, #2b3358 0%, #4a3f63 48%, #6a4358 100%);
 }
 .intro-text { color: #fff; }
 .intro-caret { background: #fff; }
