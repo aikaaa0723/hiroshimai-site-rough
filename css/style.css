@@ -1425,3 +1425,11 @@ main:focus { outline: none; }
    ============================================================ */
 .site-header { transition: transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; }
 .site-header.header-hidden { transform: translateY(-100%); }
+
+/* ============================================================
+   イントロ背景を「明るめHP」のトーンへ（白＋淡いトンマナ／文字はダーク）。
+   末尾追記＝既存の暗いイントロ指定を上書き（light版＝本体/cand-japan）。
+   ============================================================ */
+.intro { background: linear-gradient(120deg, #f3f6ff 0%, #f6f1fb 50%, #fdeef4 100%); }
+.intro-text { color: var(--ink-strong); }
+/* caret はブランドのマゼンタのまま（明るい背景でも視認可） */
