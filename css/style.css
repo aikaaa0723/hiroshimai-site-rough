@@ -1449,17 +1449,12 @@ main:focus { outline: none; }
    ミッション：構成（大きな "Mission" 見出し＋写真コラージュ）は維持し、
    背景・文字色は従来の明るいトーンに戻す（base/テーマ変数に委ねる）。見出しはやや小さく。
    ============================================================ */
-/* ミッション見出しを他セクション(.s-head)と一致＝英字を小ラベル・和文「ミッション」を大見出しに、
-   ステートメント(内容)は見出しを超えないサイズに（＝見出し＞内容） */
+/* ミッションは英字のみの見出し（和文ラベルなし）。見出し＞内容を維持＝
+   "Mission" を見出しサイズ・細字、ステートメント(内容)はそれより小さく */
 .mf-big {
-  font-family: var(--font-en); font-weight: 700; line-height: 1.2;
-  font-size: 12px; letter-spacing: .22em; color: var(--ink-soft);
-  margin: 0 0 8px;
-}
-.mf-kicker {
-  font-family: var(--font); font-weight: 700; color: var(--ink-strong);
-  font-size: clamp(20px, 3.2vw, 33px); letter-spacing: .01em; line-height: 1.4;
-  margin-bottom: 28px;
+  font-family: var(--font-en); font-weight: 300; line-height: 1.05;
+  font-size: clamp(28px, 4vw, 46px); letter-spacing: .01em; color: var(--ink-strong);
+  margin: 0 0 28px;
 }
 .mf-statement { font-size: clamp(16px, 2.2vw, 24px); line-height: 1.85; }
 
