@@ -1425,7 +1425,9 @@ main:focus { outline: none; }
    ヒーロー上は従来どおり黒ヘッダー＋白ロゴ。トップのみ（サブページは .hero 無しで常時黒）。
    末尾追記＝既存 UNIFIED HEADER を cascade で上書き（revert容易）。
    ============================================================ */
-.site-header { transition: background .35s ease, border-color .35s ease, -webkit-backdrop-filter .35s ease, backdrop-filter .35s ease; }
+.site-header { transition: background .35s ease, border-color .35s ease, -webkit-backdrop-filter .35s ease, backdrop-filter .35s ease, transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; }
+/* ヒーロー下境界より下：下スクロールで隠す（上にスライド）／上スクロールで再表示（JSが .header-hidden をトグル） */
+.site-header.header-hidden { transform: translateY(-100%); }
 .site-header.past-hero {
   background: rgba(255,255,255,.86);
   -webkit-backdrop-filter: blur(10px) saturate(1.05); backdrop-filter: blur(10px) saturate(1.05);

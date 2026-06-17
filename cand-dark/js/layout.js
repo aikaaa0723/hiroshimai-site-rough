@@ -210,4 +210,29 @@
     hv.addEventListener("play", syncTg); hv.addEventListener("pause", syncTg);
     heroSec.appendChild(tg); syncTg();
   }
+
+  /* ===== ヘッダー：ヒーロー動画の下境界より下＝下スクロールで隠す/上スクロールで再表示（dark候補は配色は黒のまま） ===== */
+  (function () {
+    var hdr = document.getElementById("siteHeader");
+    var hero = document.querySelector(".hero");
+    if (!hdr || !hero) return;   /* ヒーローのあるトップのみ。サブページは従来どおり */
+    var lastY = window.pageYOffset || 0;
+    var ticking = false;
+    function sync() {
+      var y = window.pageYOffset || 0;
+      var heroBottom = hero.offsetTop + hero.offsetHeight;
+      var navOpen = document.documentElement.classList.contains("nav-open");
+      if (y > heroBottom && !navOpen) {
+        if (y > lastY + 4) hdr.classList.add("header-hidden");          /* 下スクロール→隠す */
+        else if (y < lastY - 4) hdr.classList.remove("header-hidden");  /* 上スクロール→再表示 */
+      } else {
+        hdr.classList.remove("header-hidden");                          /* ヒーロー上/最上部は常時表示 */
+      }
+      lastY = y;
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+  })();
 })();

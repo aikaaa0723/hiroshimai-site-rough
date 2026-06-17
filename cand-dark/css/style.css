@@ -1427,3 +1427,10 @@ main:focus { outline: none; }
     opacity: 1; overflow: hidden;
   }
 }
+
+/* ============================================================
+   ヘッダー：ヒーロー下境界より下＝下スクロールで隠す/上スクロールで再表示
+   （JSが .header-hidden をトグル）。dark候補は配色は黒のまま＝スライドのみ。
+   ============================================================ */
+.site-header { transition: transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; }
+.site-header.header-hidden { transform: translateY(-100%); }
