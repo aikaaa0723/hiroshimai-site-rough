@@ -1445,6 +1445,21 @@ main:focus { outline: none; }
 .intro-text { color: var(--ink-strong); }
 .intro-caret { background: var(--magenta); }
 
+/* イントロ文字モーション（Sony風）：左から順に浮き上がり→沈んで定着。
+   文字色は JS でトンマナのグラデ（青→紫→マゼンタ）を位置補間して付与。 */
+.intro-type .introc {
+  display: inline-block; opacity: 0; will-change: transform, opacity;
+  animation: introCharRise .7s cubic-bezier(.2,.85,.25,1) both;
+}
+@keyframes introCharRise {
+  0%   { opacity: 0; transform: translateY(.55em); }
+  55%  { opacity: 1; transform: translateY(-.18em); }   /* 浮き上がり（やや上へオーバーシュート） */
+  100% { opacity: 1; transform: translateY(0); }         /* 沈んで定着 */
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-type .introc { animation: none; opacity: 1; }
+}
+
 /* ============================================================
    ミッション：構成（大きな "Mission" 見出し＋写真コラージュ）は維持し、
    背景・文字色は従来の明るいトーンに戻す（base/テーマ変数に委ねる）。見出しはやや小さく。

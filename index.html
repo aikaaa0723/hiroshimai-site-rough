@@ -40,19 +40,33 @@
       }
       document.documentElement.classList.add("intro-lock");
       var out = document.getElementById("introType");
-      var NL = String.fromCharCode(10);
-      var full = "AIで広島から、" + NL + "未来を実装する。";
+      var caret = intro.querySelector(".intro-caret"); if (caret) caret.style.display = "none";
+      var lines = ["AIで広島から、", "未来を実装する。"];
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) { out.innerHTML = full.split(NL).join("<br>"); setTimeout(function () { finish(false); }, 1100); return; }
-      var i = 0;
-      function tick() {
-        out.innerHTML = full.slice(0, i).split(NL).join("<br>");
-        if (i >= full.length) { setTimeout(function () { finish(false); }, 650); return; }
-        var ch = full.charAt(i); i++;
-        var delay = ch === NL ? 320 : (ch === "、" ? 260 : (ch === "。" ? 120 : 78));
-        setTimeout(tick, delay);
+      /* 文字色＝トンマナのグラデ（青→紫→マゼンタ）を文字位置で補間 */
+      function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+      function gradColor(t) {
+        var bl = [61, 90, 171], pu = [140, 90, 156], mg = [214, 51, 108], c1, c2, tt;
+        if (t < 0.5) { c1 = bl; c2 = pu; tt = t / 0.5; } else { c1 = pu; c2 = mg; tt = (t - 0.5) / 0.5; }
+        return "rgb(" + lerp(c1[0], c2[0], tt) + "," + lerp(c1[1], c2[1], tt) + "," + lerp(c1[2], c2[2], tt) + ")";
       }
-      setTimeout(tick, 350);
+      var total = lines.join("").length, idx = 0, html = "", STEP = 0.055;
+      lines.forEach(function (line, li) {
+        for (var k = 0; k < line.length; k++) {
+          var t = total > 1 ? idx / (total - 1) : 0;
+          html += '<span class="introc" style="color:' + gradColor(t) + ';animation-delay:' + (idx * STEP).toFixed(3) + 's">' + line.charAt(k) + "</span>";
+          idx++;
+        }
+        if (li < lines.length - 1) html += "<br>";
+      });
+      out.innerHTML = html;
+      if (reduce) {
+        Array.prototype.forEach.call(out.querySelectorAll(".introc"), function (s) { s.style.animation = "none"; s.style.opacity = "1"; });
+        setTimeout(function () { finish(false); }, 1000);
+        return;
+      }
+      var totalMs = ((total - 1) * STEP + 0.7) * 1000;   /* 最後の文字の遅延＋アニメ長 */
+      setTimeout(function () { finish(false); }, totalMs + 700);
     })();
   </script>
   <div id="app-header"></div>
