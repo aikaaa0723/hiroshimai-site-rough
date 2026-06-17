@@ -129,7 +129,7 @@
   }
 
   /* ===== 文字マスクリベール（Sony：見出し/ステートメントの行が overflow:hidden からせり上がる） ===== */
-  var maskEls = Array.prototype.slice.call(document.querySelectorAll(".s-head h2, .nr-head h2, .mf-statement"));
+  var maskEls = Array.prototype.slice.call(document.querySelectorAll(".s-head .en, .nr-head .en, .s-head h2, .nr-head h2, .mf-statement"));
   maskEls.forEach(function (el) {
     var lines = el.innerHTML.split(/<br\s*\/?>/i);
     el.innerHTML = lines.map(function (ln) { return '<span class="rl"><span class="rl-i">' + ln + "</span></span>"; }).join("");
