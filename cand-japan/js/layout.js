@@ -211,7 +211,7 @@
     heroSec.appendChild(tg); syncTg();
   }
 
-  /* ===== ヘッダー：ヒーロー通過後に背景(明色)へ配色一致＋下スクロールで隠す/上スクロールで再表示 ===== */
+  /* ===== ヘッダー：ヒーロー動画の下境界より下＝下スクロールで隠す/上スクロールで再表示（配色は変えない） ===== */
   (function () {
     var hdr = document.getElementById("siteHeader");
     var hero = document.querySelector(".hero");
@@ -220,10 +220,7 @@
     var ticking = false;
     function sync() {
       var y = window.pageYOffset || 0;
-      var hh = hdr.offsetHeight;
       var heroBottom = hero.offsetTop + hero.offsetHeight;
-      /* ヒーロー下境界に達したら背景の明色セクションに合わせて白ヘッダー＋ダークロゴへ */
-      hdr.classList.toggle("past-hero", y >= heroBottom - hh);
       /* ヒーロー動画の下境界より下：下スクロールで隠す／上スクロールで再表示。メニュー展開中は隠さない */
       var navOpen = document.documentElement.classList.contains("nav-open");
       if (y > heroBottom && !navOpen) {

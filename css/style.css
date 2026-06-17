@@ -1420,26 +1420,8 @@ main:focus { outline: none; }
 }
 
 /* ============================================================
-   ヘッダー配色：ヒーローの下境界を越えたら背景（明色セクション）に一致させる。
-   ＝白い半透明ヘッダー＋ダークロゴ＋ダークナビへ（JSが .past-hero を付与）。
-   ヒーロー上は従来どおり黒ヘッダー＋白ロゴ。トップのみ（サブページは .hero 無しで常時黒）。
-   末尾追記＝既存 UNIFIED HEADER を cascade で上書き（revert容易）。
+   ヘッダー：ヒーロー下境界より下＝下スクロールで隠す/上スクロールで再表示。
+   配色は変えない（常時 黒＋白ロゴ＝ヒーローと同色）。
    ============================================================ */
-.site-header { transition: background .35s ease, border-color .35s ease, -webkit-backdrop-filter .35s ease, backdrop-filter .35s ease, transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; }
-/* ヒーロー下境界より下：下スクロールで隠す（上にスライド）／上スクロールで再表示（JSが .header-hidden をトグル） */
+.site-header { transition: transform .35s cubic-bezier(.4,0,.2,1); will-change: transform; }
 .site-header.header-hidden { transform: translateY(-100%); }
-.site-header.past-hero {
-  background: rgba(255,255,255,.86);
-  -webkit-backdrop-filter: blur(10px) saturate(1.05); backdrop-filter: blur(10px) saturate(1.05);
-  border-bottom: 1px solid var(--line);
-}
-.site-header.past-hero .brand-logo.logo-light { display: none; }
-.site-header.past-hero .brand-logo.logo-dark { display: block; height: 30px; width: auto; }
-.site-header.past-hero .global-nav a { color: var(--ink); }
-.site-header.past-hero .global-nav a.active { color: var(--ink-strong); }
-.site-header.past-hero .global-nav a::after { background: var(--grad); }
-.site-header.past-hero .btn-head { color: var(--ink-strong); border-color: var(--line); }
-.site-header.past-hero .btn-head:hover { background: var(--grad); color: #fff; border-color: transparent; }
-.site-header.past-hero .nav-burger span { background: var(--ink-strong); }
-.site-header.past-hero .lang-toggle a { color: var(--ink-soft); }
-.site-header.past-hero .lang-toggle a.on, .site-header.past-hero .lang-toggle .sep { color: var(--ink-strong); }
