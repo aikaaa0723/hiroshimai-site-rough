@@ -684,10 +684,13 @@ body { background: transparent; }
 .pf-num { font-family: var(--font-en); font-size: 13px; font-weight: 700; letter-spacing: .12em; color: #fff; opacity: .82; }
 .pf-title { font-size: clamp(19px, 2.4vw, 27px); font-weight: 700; line-height: 1.3; }
 .pf-sub { font-size: 13px; font-weight: 400; opacity: .86; }
+/* 6面（60°刻み）＝六角柱の見え方。面数を増やしたら角度も等分で増やす */
 .prism-face:nth-child(1) { transform: rotateY(0deg)   translateZ(var(--d, 300px)); }
-.prism-face:nth-child(2) { transform: rotateY(90deg)  translateZ(var(--d, 300px)); }
-.prism-face:nth-child(3) { transform: rotateY(180deg) translateZ(var(--d, 300px)); }
-.prism-face:nth-child(4) { transform: rotateY(270deg) translateZ(var(--d, 300px)); }
+.prism-face:nth-child(2) { transform: rotateY(60deg)  translateZ(var(--d, 300px)); }
+.prism-face:nth-child(3) { transform: rotateY(120deg) translateZ(var(--d, 300px)); }
+.prism-face:nth-child(4) { transform: rotateY(180deg) translateZ(var(--d, 300px)); }
+.prism-face:nth-child(5) { transform: rotateY(240deg) translateZ(var(--d, 300px)); }
+.prism-face:nth-child(6) { transform: rotateY(300deg) translateZ(var(--d, 300px)); }
 
 .prism-nav { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
   background: rgba(255,255,255,.92); color: var(--ink-strong); font-size: 22px; line-height: 1; cursor: pointer;

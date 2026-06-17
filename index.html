@@ -163,17 +163,20 @@
           var prev = wrap.querySelector(".prism-nav.prev");
           var next = wrap.querySelector(".prism-nav.next");
           var idx = 0;
+          var step = 360 / faces;                              /* 面数で等分（6面＝60°＝六角柱の見え方） */
           function setDepth() {
-            /* w/2 だと閉じた箱（面が辺で接続）。係数を大きくして面同士を離す＝間隔を空ける */
-            prism.style.setProperty("--d", (stage.clientWidth * 0.82) + "px");
+            /* 正多角形の辺接触半径(=apothem/面幅)を基準に少し離す＝透明な角柱に */
+            var apo = 0.5 / Math.tan(Math.PI / faces);
+            prism.style.setProperty("--d", (stage.clientWidth * apo * 1.12) + "px");
           }
           function render() {
             var cur = (idx % faces + faces) % faces;
-            prism.style.transform = "translateZ(calc(var(--d) * -1)) rotateY(" + (-idx * 90) + "deg)";
+            /* idx は正規化せず単調増加＝最後の面の次もそのまま前進回転（最初へシームレスに繋がる） */
+            prism.style.transform = "translateZ(calc(var(--d) * -1)) rotateY(" + (-idx * step) + "deg)";
             dots.forEach(function (d, i) { d.classList.toggle("on", i === cur); });
             faceEls.forEach(function (f, i) { f.classList.toggle("is-front", i === cur); }); /* 正面の面だけ不透過に */
           }
-          function go(n) { idx = (n % faces + faces) % faces; render(); }
+          function go(n) { idx = n; render(); }                /* 正規化しない＝回転は連続（逆戻りジャンプを解消） */
           setDepth();
           go(0);
           window.addEventListener("resize", function () { setDepth(); render(); });
@@ -391,6 +394,14 @@
             <a class="prism-face" href="cases/index.html" data-i="3">
               <img loading="lazy" src="assets/img-abstract.webp" alt="" />
               <span class="pf-cap"><b class="pf-num">CASE 04</b><b class="pf-title">製造・物流・農業</b><span class="pf-sub">IoT×AIで現場のデータを見える化。</span></span>
+            </a>
+            <a class="prism-face" href="cases/index.html" data-i="4">
+              <img loading="lazy" src="assets/img-monitors.webp" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 05</b><b class="pf-title">小売・飲食 ・ 需要予測</b><span class="pf-sub">在庫・来客予測で廃棄とロスを削減（準備中）。</span></span>
+            </a>
+            <a class="prism-face" href="cases/index.html" data-i="5">
+              <img loading="lazy" src="assets/img-laptop.webp" alt="" />
+              <span class="pf-cap"><b class="pf-num">CASE 06</b><b class="pf-title">バックオフィス ・ 文書効率化</b><span class="pf-sub">見積・請求・問い合わせ対応をAIで時短（準備中）。</span></span>
             </a>
           </div>
         </div>
