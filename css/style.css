@@ -1437,13 +1437,13 @@ main:focus { outline: none; }
    ============================================================ */
 .intro {
   background:
-    radial-gradient(58% 70% at 16% 18%, rgba(78,98,150,.5) 0%, transparent 60%),
-    radial-gradient(60% 70% at 86% 24%, rgba(116,92,150,.45) 0%, transparent 62%),
-    radial-gradient(74% 82% at 74% 92%, rgba(168,96,132,.45) 0%, transparent 66%),
-    linear-gradient(125deg, #2b3358 0%, #4a3f63 48%, #6a4358 100%);
+    radial-gradient(58% 70% at 16% 18%, rgba(108,132,196,.34) 0%, transparent 60%),
+    radial-gradient(60% 70% at 86% 24%, rgba(146,120,182,.30) 0%, transparent 62%),
+    radial-gradient(74% 82% at 74% 92%, rgba(200,128,162,.30) 0%, transparent 66%),
+    linear-gradient(125deg, #dfe4f2 0%, #e7e0ee 48%, #f1e2ea 100%);
 }
-.intro-text { color: #fff; }
-.intro-caret { background: #fff; }
+.intro-text { color: var(--ink-strong); }
+.intro-caret { background: var(--magenta); }
 
 /* ============================================================
    ミッション：構成（大きな "Mission" 見出し＋写真コラージュ）は維持し、
