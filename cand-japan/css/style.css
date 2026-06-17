@@ -1415,3 +1415,24 @@ main:focus { outline: none; }
   .footer-legal a { font-size: 11px; }
   .footer-note   { font-size: 10px; }
 }
+
+/* ============================================================
+   [モバイル] ミッション：画像を「文字下の帯」ではなくセクション全面へ広く流す
+   （文字の背後にかぶってOK＝動きのある演出）。可読性は文字裏のソフト白スクリム
+   ＋text-shadow で確保。末尾追記＝前段のモバイル帯指定(relative/order/height固定)を上書き。
+   ============================================================ */
+@media (max-width: 720px) {
+  .mission-feature { display: block; min-height: 78svh; padding: 88px 22px 96px; overflow: hidden; }
+  /* 帯を解除し、デスクトップ同様に全面へ（inset:0＝広い範囲を流れる） */
+  .mflow {
+    position: absolute; inset: 0; order: 0;
+    width: auto; height: auto; margin: 0; opacity: 1; overflow: hidden;
+  }
+  /* 文字は前面＋下へフェードする白スクリムで読みやすく（周囲・下部は画像が見える） */
+  .mf-text {
+    position: relative; z-index: 2; max-width: none; padding-bottom: 10px;
+    background: radial-gradient(130% 100% at 22% 34%, rgba(255,255,255,.86), rgba(255,255,255,.45) 56%, rgba(255,255,255,0) 82%);
+  }
+  .mf-statement { text-shadow: 0 1px 12px rgba(255,255,255,.78); }
+  .mf-kicker, .mf-sub { text-shadow: 0 1px 8px rgba(255,255,255,.72); }
+}
