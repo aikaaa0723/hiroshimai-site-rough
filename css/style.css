@@ -1445,19 +1445,22 @@ main:focus { outline: none; }
 .intro-text { color: var(--ink-strong); }
 .intro-caret { background: var(--magenta); }
 
-/* イントロ文字モーション（Sony風）：左から順に浮き上がり→沈んで定着。
-   文字色は JS でトンマナのグラデ（青→紫→マゼンタ）を位置補間して付与。 */
+/* イントロ文字モーション（ハイテク×pop／デバッグ出力風）：
+   左から「ぱたぱた」と貼られる split-flap 風の上ヒンジ flip。
+   出現中は鮮やか(--cv)、定着すると可読性のため暗色グラデ(--cd)へ。 */
 .intro-type .introc {
-  display: inline-block; opacity: 0; will-change: transform, opacity;
-  animation: introCharRise .7s cubic-bezier(.2,.85,.25,1) both;
+  display: inline-block; opacity: 0; transform-origin: 50% 0%;
+  color: var(--cd, var(--ink-strong));     /* 定着色＝暗色グラデ */
+  will-change: transform, opacity, color;
+  animation: introSnap .5s cubic-bezier(.34,1.32,.44,1) both;
 }
-@keyframes introCharRise {
-  0%   { opacity: 0; transform: translateY(.55em); }
-  55%  { opacity: 1; transform: translateY(-.18em); }   /* 浮き上がり（やや上へオーバーシュート） */
-  100% { opacity: 1; transform: translateY(0); }         /* 沈んで定着 */
+@keyframes introSnap {
+  0%   { opacity: 0; transform: perspective(320px) rotateX(-92deg); color: var(--cv); }
+  55%  { opacity: 1; transform: perspective(320px) rotateX(6deg); color: var(--cv); }  /* 貼り付く＝鮮やか */
+  100% { opacity: 1; transform: perspective(320px) rotateX(0deg); color: var(--cd); }   /* 定着＝暗色 */
 }
 @media (prefers-reduced-motion: reduce) {
-  .intro-type .introc { animation: none; opacity: 1; }
+  .intro-type .introc { animation: none; opacity: 1; transform: none; color: var(--cd); }
 }
 
 /* ============================================================
