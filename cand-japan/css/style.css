@@ -1439,19 +1439,24 @@ main:focus { outline: none; }
 }
 
 /* ============================================================
-   サイト背景を「白＋トンマナグラデ」基調へ（ユーザー要望）
-   従来＝濃いブランドグラデ（暗い base linear #0a1a8c→#7a0a52）。
-   これを白ベース＋青→紫→マゼンタのソフトなグラデ・ウォッシュへ再宣言（末尾上書き）。
-   5層構造・size/position は踏襲するので drift アニメ(heroDrift)は継続。
-   ※cand-japan は light テーマ＝この白背景を採用。
+   ヘッダー配色：ヒーローの下境界を越えたら背景（明色セクション）に一致させる。
+   ＝白い半透明ヘッダー＋ダークロゴ＋ダークナビへ（JSが .past-hero を付与）。
+   ヒーロー上は従来どおり黒ヘッダー＋白ロゴ。トップのみ（サブページは .hero 無しで常時黒）。
+   末尾追記＝既存 UNIFIED HEADER を cascade で上書き（revert容易）。
    ============================================================ */
-.site-bg {
-  background:
-    radial-gradient(50% 60% at 14% 16%, rgba(61,90,171,.26) 0%, rgba(61,90,171,.10) 40%, transparent 70%),
-    radial-gradient(54% 60% at 86% 14%, rgba(140,86,200,.24) 0%, rgba(140,86,200,.09) 42%, transparent 72%),
-    radial-gradient(60% 66% at 80% 86%, rgba(214,51,108,.24) 0%, rgba(214,51,108,.09) 42%, transparent 72%),
-    radial-gradient(48% 56% at 20% 90%, rgba(61,120,220,.20) 0%, rgba(61,120,220,.08) 40%, transparent 70%),
-    linear-gradient(120deg, #ffffff 0%, #faf9ff 46%, #fff6fa 100%);
-  background-size: 200% 200%, 200% 200%, 220% 220%, 200% 200%, 100% 100%;
-  background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0;
+.site-header { transition: background .35s ease, border-color .35s ease, -webkit-backdrop-filter .35s ease, backdrop-filter .35s ease; }
+.site-header.past-hero {
+  background: rgba(255,255,255,.86);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05); backdrop-filter: blur(10px) saturate(1.05);
+  border-bottom: 1px solid var(--line);
 }
+.site-header.past-hero .brand-logo.logo-light { display: none; }
+.site-header.past-hero .brand-logo.logo-dark { display: block; height: 30px; width: auto; }
+.site-header.past-hero .global-nav a { color: var(--ink); }
+.site-header.past-hero .global-nav a.active { color: var(--ink-strong); }
+.site-header.past-hero .global-nav a::after { background: var(--grad); }
+.site-header.past-hero .btn-head { color: var(--ink-strong); border-color: var(--line); }
+.site-header.past-hero .btn-head:hover { background: var(--grad); color: #fff; border-color: transparent; }
+.site-header.past-hero .nav-burger span { background: var(--ink-strong); }
+.site-header.past-hero .lang-toggle a { color: var(--ink-soft); }
+.site-header.past-hero .lang-toggle a.on, .site-header.past-hero .lang-toggle .sep { color: var(--ink-strong); }

@@ -210,4 +210,20 @@
     hv.addEventListener("play", syncTg); hv.addEventListener("pause", syncTg);
     heroSec.appendChild(tg); syncTg();
   }
+
+  /* ===== ヘッダー配色：ヒーローの下境界を越えたら背景(明色)に合わせて白ヘッダー＋ダークロゴへ ===== */
+  (function () {
+    var hdr = document.getElementById("siteHeader");
+    var hero = document.querySelector(".hero");
+    if (!hdr || !hero) return;   /* ヒーローのあるトップのみ。サブページは常時ダーク維持 */
+    var ticking = false;
+    function sync() {
+      var past = window.pageYOffset >= (hero.offsetTop + hero.offsetHeight - hdr.offsetHeight);
+      hdr.classList.toggle("past-hero", past);
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+  })();
 })();
