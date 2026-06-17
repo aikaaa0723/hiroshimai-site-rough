@@ -312,9 +312,21 @@
             t.style.transform = "translate3d(" + t._x.toFixed(1) + "px," + t._y.toFixed(1) + "px,0)";
             t.style.opacity = (op * life).toFixed(3);
           }
-          requestAnimationFrame(frame);
+          rafId = requestAnimationFrame(frame);
         }
-        if (!reduce) requestAnimationFrame(frame);
+        var rafId = null, inView = false;
+        /* 画面内かつタブ表示中のときだけ流す＝オフスクリーン/非表示タブでは rAF を止め常時CPU負荷を排除 */
+        function syncFlow() {
+          if (inView && !document.hidden) { if (rafId == null) { last = null; rafId = requestAnimationFrame(frame); } }
+          else if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+        }
+        if (!reduce) {
+          var mfSec = host.closest(".mission-feature") || host;
+          if ("IntersectionObserver" in window) {
+            new IntersectionObserver(function (es) { es.forEach(function (e) { inView = e.isIntersecting; }); syncFlow(); }, { rootMargin: "120px 0px" }).observe(mfSec);
+          } else { inView = true; syncFlow(); }
+          document.addEventListener("visibilitychange", syncFlow);
+        }
         else { for (var k3 = 0; k3 < tiles.length; k3++) { tiles[k3]._x = W * (0.2 + k3 * 0.12); tiles[k3].style.transform = "translate3d(" + tiles[k3]._x + "px," + tiles[k3]._y + "px,0)"; tiles[k3].style.opacity = "0.5"; } }
       })();
 

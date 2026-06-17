@@ -170,13 +170,16 @@
     var ticking = false;
     function applyParallax() {
       var vh = window.innerHeight;
-      pxImgs.forEach(function (img) {
-        var c = img.parentElement.getBoundingClientRect();
-        if (c.bottom < -60 || c.top > vh + 60) return;
+      /* レイアウトスラッシング回避：読み(getBoundingClientRect)を先に全件→書き(transform)を後でまとめて */
+      var rects = new Array(pxImgs.length);
+      for (var r = 0; r < pxImgs.length; r++) { rects[r] = pxImgs[r].parentElement.getBoundingClientRect(); }
+      for (var w = 0; w < pxImgs.length; w++) {
+        var c = rects[w];
+        if (c.bottom < -60 || c.top > vh + 60) continue;
         var prog = (c.top + c.height / 2 - vh / 2) / vh;      /* -0.5〜+0.5 */
         var shift = Math.max(-8, Math.min(8, prog * -13));     /* px（Sony＝静かなモーション） */
-        img.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(1.07)";
-      });
+        pxImgs[w].style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(1.07)";
+      }
       ticking = false;
     }
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(applyParallax); } }, { passive: true });

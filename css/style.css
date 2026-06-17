@@ -1505,3 +1505,30 @@ main:focus { outline: none; }
   .ac-num { order: 2; }
   .ac-arrows { order: 3; margin-left: auto; }   /* 矢印を右端へ（バー＋番号は左） */
 }
+
+/* ============================================================
+   かくつき（スクロールジャンク）対策 — 末尾追記で上書き
+   原因1: 大面積パネルの backdrop-filter:blur を、固定＋アニメーションする .site-bg の上で
+          毎フレーム再ブラーしていた（スクロール時の主因）→ blur を解除（半透明白.78は維持）。
+   原因2: .site-bg が background-position をアニメ（paintプロパティ＝全画面連続再描画）→
+          transform(GPU合成)ベースのドリフトに変更し再ペイントを排除。
+   ============================================================ */
+.hero, .section, .section.alt, .cta.section,
+.mission-feature, .page-section, .page-hero, .scrolly-sticky {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.site-bg {
+  inset: -8%;
+  /* background-position は静止させ、要素自体を transform でゆっくり動かす（合成のみ＝再ペイントなし） */
+  background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0;
+  animation: bgDrift 30s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes bgDrift {
+  0%, 100% { transform: translate3d(-1.2%, -1%, 0) scale(1.05); }
+  50%      { transform: translate3d(1.6%, 1.2%, 0) scale(1.09); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-bg { animation: none; transform: none; inset: 0; }
+}
