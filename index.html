@@ -251,7 +251,11 @@
             t._w = rand(230, 330);   /* PC＝従来どおり（フォーマット維持） */
           }
           t._h = t._w * 0.62;
-          t._x = x; t._y = rand(H * 0.10, Math.max(H * 0.10, H - t._h - H * 0.10));
+          var hb = host.getBoundingClientRect();
+          var te = document.querySelector(".mf-text");
+          var minY = H * 0.10;                                  /* 既定の上マージン */
+          if (te) { minY = Math.max(minY, te.getBoundingClientRect().top - hb.top); }  /* 画像が文字より上に来ないよう、文字の上端を下限に */
+          t._x = x; t._y = rand(minY, Math.max(minY, H - t._h - H * 0.10));
           t.style.width = t._w + "px"; t.style.height = t._h + "px";
           t.querySelector("img").src = IMGS[(ii++) % IMGS.length];
           t._t0 = null;   /* 挿入時刻（フェードイン用にリセット） */
