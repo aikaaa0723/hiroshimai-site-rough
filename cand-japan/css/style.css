@@ -1437,3 +1437,21 @@ main:focus { outline: none; }
     opacity: 1; overflow: hidden;
   }
 }
+
+/* ============================================================
+   サイト背景を「白＋トンマナグラデ」基調へ（ユーザー要望）
+   従来＝濃いブランドグラデ（暗い base linear #0a1a8c→#7a0a52）。
+   これを白ベース＋青→紫→マゼンタのソフトなグラデ・ウォッシュへ再宣言（末尾上書き）。
+   5層構造・size/position は踏襲するので drift アニメ(heroDrift)は継続。
+   ※cand-japan は light テーマ＝この白背景を採用。
+   ============================================================ */
+.site-bg {
+  background:
+    radial-gradient(50% 60% at 14% 16%, rgba(61,90,171,.26) 0%, rgba(61,90,171,.10) 40%, transparent 70%),
+    radial-gradient(54% 60% at 86% 14%, rgba(140,86,200,.24) 0%, rgba(140,86,200,.09) 42%, transparent 72%),
+    radial-gradient(60% 66% at 80% 86%, rgba(214,51,108,.24) 0%, rgba(214,51,108,.09) 42%, transparent 72%),
+    radial-gradient(48% 56% at 20% 90%, rgba(61,120,220,.20) 0%, rgba(61,120,220,.08) 40%, transparent 70%),
+    linear-gradient(120deg, #ffffff 0%, #faf9ff 46%, #fff6fa 100%);
+  background-size: 200% 200%, 200% 200%, 220% 220%, 200% 200%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 0 0;
+}
