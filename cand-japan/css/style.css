@@ -1141,7 +1141,7 @@ main:focus { outline: none; }
   .mf-text { order: 0; position: relative; z-index: 2; max-width: none; }
   .mflow {
     position: relative; inset: auto; order: 1;
-    width: 100%; height: 260px; margin-top: 30px;
+    width: 100%; height: 300px; margin-top: 26px;
     opacity: 1; overflow: hidden;
   }
 }
@@ -1384,4 +1384,34 @@ main:focus { outline: none; }
   .price-op { text-align: center; font-size: 20px; line-height: 1; margin: -2px 0; }
 
   .flow-list .flow-item:last-child { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   フッター：文字を全体的に小さく＋サイズを揃えてバランス調整
+   ・会社概要カラム(.footer-meta li)が既定16pxで突出していたのをリンクと同サイズへ
+   ・モバイルは下段(規約リンク＋著作権)を縦積みにし折返しの乱れを解消
+   末尾追記＝既存ブロックは触らず cascade で上書き（revert容易）
+   ============================================================ */
+.footer-brand p { font-size: 12px; line-height: 1.75; }
+.footer-col h4  { font-size: 11px; margin-bottom: 12px; }
+.footer-col a   { font-size: 12px; }
+.footer-meta li { font-size: 12px; line-height: 1.85; }   /* 既定16px→他カラムと統一 */
+.footer-legal a { font-size: 11px; }
+.copyright      { font-size: 11px; }
+.footer-note    { font-size: 10.5px; line-height: 1.7; }
+
+/* モバイルで brand と nav が横並び(1.3fr 2fr)のまま＝列が細く語中で改行が崩れる。
+   後段の非メディア指定が 720px ルールを上書きしていたので、ここで1カラムに戻す */
+@media (max-width: 720px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+}
+@media (max-width: 560px) {
+  .footer-brand p { font-size: 11.5px; }
+  .footer-col h4  { font-size: 10.5px; }
+  .footer-col a, .footer-meta li { font-size: 11.5px; }
+  /* 下段：space-between の折返しで崩れるため縦積み・左揃えに */
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 20px; }
+  .footer-legal  { flex-wrap: wrap; gap: 8px 18px; }
+  .footer-legal a { font-size: 11px; }
+  .footer-note   { font-size: 10px; }
 }

@@ -234,7 +234,8 @@
           d.appendChild(im); host.appendChild(d); tiles.push(d);
         }
         function reset(t, x) {
-          t._w = rand(230, 330); t._h = t._w * 0.62;
+          var maxw = Math.min(330, Math.max(150, W * 0.5)); /* 画面幅に比例（モバイルでは小さく＝1列化を防ぐ） */
+          t._w = rand(maxw * 0.72, maxw); t._h = t._w * 0.62;
           t._x = x; t._y = rand(H * 0.10, Math.max(H * 0.10, H - t._h - H * 0.10));
           t.style.width = t._w + "px"; t.style.height = t._h + "px";
           t.querySelector("img").src = IMGS[(ii++) % IMGS.length];
