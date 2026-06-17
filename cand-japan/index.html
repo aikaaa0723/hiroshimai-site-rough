@@ -157,7 +157,12 @@
           function setDepth() {
             /* 正多角形の辺接触半径(=apothem/面幅)を基準に少し離す＝透明な角柱に */
             var apo = 0.5 / Math.tan(Math.PI / faces);
-            prism.style.setProperty("--d", (stage.clientWidth * apo * 1.12) + "px");
+            var P = 2200;                                   /* .prism-stage の perspective と一致 */
+            var d0 = stage.clientWidth * apo * 1.12;         /* 基準半径（六角柱）＝焦点画像サイズの基準 */
+            var d  = stage.clientWidth * apo * 1.4;          /* 広げた半径＝隣の面が画面端で切れてはみ出す */
+            prism.style.setProperty("--d", d + "px");
+            /* 焦点面の見かけサイズを d0 のときと同じに保つ＝間隔だけ広げ画像サイズは不変 */
+            prism.style.setProperty("--fs", (P - d) / (P - d0));
           }
           function render() {
             var cur = (idx % faces + faces) % faces;
