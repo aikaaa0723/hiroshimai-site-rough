@@ -21,7 +21,7 @@
 
   /* ダークロゴ（白ヘッダー用・SVG：Hiroshim=ダーク／AI=マゼンタ）。透明ヘッダー時は画像ロゴ(白文字)へ切替 */
   var LOGO_DARK =
-    '<svg class="brand-logo logo-dark" viewBox="0 0 286 56" role="img" aria-label="HiroshimAI">' +
+    '<svg class="brand-logo logo-dark" viewBox="0 0 286 56" role="img" aria-label="HiroshimAI株式会社">' +
       '<rect x="2"  y="16" width="3.4" height="24" rx="1.7" fill="#3d5aab"/>' +
       '<rect x="10" y="6"  width="3.4" height="44" rx="1.7" fill="#3d5aab"/>' +
       '<rect x="18" y="20" width="3.4" height="18" rx="1.7" fill="#8c5a9c"/>' +
@@ -41,8 +41,8 @@
   var header =
     '<header class="site-header" id="siteHeader">' +
       '<div class="header-inner">' +
-        '<a href="' + ROOT + 'index.html" class="brand" aria-label="HiroshimAI ホーム">' +
-          '<img class="brand-logo logo-light" src="' + ROOT + 'assets/logo.png" alt="HiroshimAI" />' +
+        '<a href="' + ROOT + 'index.html" class="brand" aria-label="HiroshimAI株式会社 ホーム">' +
+          '<img class="brand-logo logo-light" src="' + ROOT + 'assets/logo.png" alt="HiroshimAI株式会社" />' +
           LOGO_DARK +
         '</a>' +
         '<nav class="global-nav" aria-label="グローバルナビゲーション"><ul>' + NAV + '</ul></nav>' +
@@ -59,7 +59,7 @@
     '<footer class="site-footer">' +
       '<div class="footer-inner">' +
         '<div class="footer-brand">' +
-          '<a href="' + ROOT + 'index.html" class="brand" aria-label="HiroshimAI ホーム"><img class="brand-logo footer-logo" src="' + ROOT + 'assets/logo.png" alt="HiroshimAI" /></a>' +
+          '<a href="' + ROOT + 'index.html" class="brand" aria-label="HiroshimAI株式会社 ホーム"><img class="brand-logo footer-logo" src="' + ROOT + 'assets/logo.png" alt="HiroshimAI株式会社" /></a>' +
           '<p>AIで広島から、未来を実装する。<br />地域の中小企業のAI活用を、構想から実装まで。</p>' +
           '<div class="footer-social">' +
             '<a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.3 8.4L23 22h-6.8l-5-6.6L5.5 22H2.3l7.8-9L1.5 2h6.9l4.5 6 5.9-6Zm-2.4 18h1.9L7.6 4H5.6l10.9 16Z"/></svg></a>' +
